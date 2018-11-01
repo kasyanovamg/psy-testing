@@ -47,7 +47,8 @@
     font-size: 60px;
 }
 td {
-    padding: 15px 28px;
+    /* padding: 15px 28px; */
+    min-width: 70px;
 }
 td:active {
     transition: all .2s ease-in-out;
