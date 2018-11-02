@@ -11,7 +11,7 @@ class Home extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <Link to="/shulte" className="">Shulte</Link>
-          <Link to="/shulte-r-b" className="">Shulte red/black</Link>
+          {/* <Link to="/shulte-r-b" className="">Shulte red/black</Link> */}
         </header>
         
       </div>

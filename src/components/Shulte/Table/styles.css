@@ -1,0 +1,11 @@
+.table {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+}
+.cell {
+    width: 80px;
+    max-width: calc(20% - 2px);
+    text-align: center;
+    border: 1px solid black;
+}
