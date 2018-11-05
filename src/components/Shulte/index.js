@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Instructions from '../Instructions';
 import Timer from '../Timer';
 import Table from './Table';
+import Information from '../Information';
 import './styles.css';
 
 class Shulte extends Component {
@@ -117,13 +118,15 @@ class Shulte extends Component {
     //     this.drawTable();
     // }
     render() {
+       // console.log(this.props)
         return (
             <div className='contents'>
                 <p>Тренировка различных аспектов внимания</p>
                 <Instructions message={'Начните поиск цифр от 1 до 25'} startTraining={this.props.startTraining} />
                 {this.props.start &&
                     <React.Fragment>
-                        <Table />
+                        <Information error={this.props.shulteError} end={this.props.shulteEnd} />
+                        <Table error={this.props.getShulteError} end={this.props.checkShulteEnd} />
                         <Timer />
                     </React.Fragment>
                 }

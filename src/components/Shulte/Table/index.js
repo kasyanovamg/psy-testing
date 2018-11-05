@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './styles.css'
 
-const Table = () => {
-    let numbers = Array(25).fill().map((e, i) => i + 1);
+//const Table = ({ error = () => { } }) => {
+class Table extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return false
+    }
+    tableLength = 25;
+    numbers = Array(this.tableLength).fill().map((e, i) => i + 1);
+    userNumbers = [0];
+    cellVerify = (cell) => {
+        this.props.error(false);
+        if (this.userNumbers.slice(-1)[0] + 1 === cell) {
+            this.userNumbers.push(cell);
+            if (this.userNumbers.slice(-1)[0] === this.tableLength) {
+                this.props.end(true)
+            }
+        }
+        else {
+            this.props.error(true);
+        }
 
-    return (
-        <div className='table'>
-            {numbers.sort(() => Math.random() - 0.5).map((e) => <div key={e + 1} className='cell'>{e + 1}</div>)}
-        </div>
-    )
+
+        console.log(this.userNumbers)
+    }
+    render() {
+        return (
+            <div className='table' >
+                {
+                    this.numbers.sort(() => Math.random() - 0.5).map((e) =>
+                        <div key={e} onClick={() => this.cellVerify(e)} className='cell'>{e}</div>)
+                }
+            </div>
+        )
+    }
+
 }
 
 export default Table;
