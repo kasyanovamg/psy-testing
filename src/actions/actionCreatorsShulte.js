@@ -1,5 +1,6 @@
 export const CELL_CHECK = 'CELL_CHECK';
 export const SHULTE_END = 'SHULTE_END';
+export const TIME_CHECK = 'TIME_CHECK';
 
 export const shulteError = (bool) => {
     return {
@@ -22,5 +23,17 @@ export const shulteEnd = (bool) => {
 export const checkShulteEnd = (bool) => {
     return (dispatch) => {
         dispatch(shulteEnd(bool))
+    };
+}
+
+export const setTime = (time) => {
+    return {
+        type: TIME_CHECK,
+        time
+    };
+}
+export const checkTime = (time) => {
+    return (dispatch) => {
+        dispatch(setTime(time))
     };
 }

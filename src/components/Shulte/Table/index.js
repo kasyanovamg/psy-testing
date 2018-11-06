@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './styles.css'
 
-//const Table = ({ error = () => { } }) => {
 class Table extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return false
@@ -20,9 +19,7 @@ class Table extends Component {
         else {
             this.props.error(true);
         }
-
-
-        console.log(this.userNumbers)
+        // console.log(this.userNumbers)
     }
     render() {
         return (
