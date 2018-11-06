@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
         shulteError: state.shulteError,
         shulteEnd: state.shulteEnd,
         time: state.checkTime,
-        error: state.errors,
+        error: state.shulteErrors,
     };
 };
 

@@ -8,7 +8,7 @@ class Home extends Component {
       <div className="App">
         <header className="App-header">
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Психологические тесты:
           </p>
           <Link to="/shulte" className="">Таблица Шульте</Link>
           <Link to="/perception1">Корректурная проба 1</Link>

@@ -41,7 +41,7 @@ export const checkTime = (state = 0, action) => {
     }
 }
 
-export const errors = (state = 0, action) => {
+export const shulteErrors = (state = 0, action) => {
     switch (action.type) {
         case SHULTE_ERROR:
             return state + action.error;

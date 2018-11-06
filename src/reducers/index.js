@@ -4,13 +4,21 @@ import {
     shulteError,
     shulteEnd,
     checkTime,
-    errors,
+    shulteErrors,
 } from './shulteReducers'
+import {
+    perceptionErrors,
+    perceptionError,
+    perceptionEnd,
+} from './perceptionReducers'
 
 export const commonReducer = combineReducers({
     start,
     shulteError,
     shulteEnd,
     checkTime,
-    errors,
+    shulteErrors,
+    perceptionErrors,
+    perceptionError,
+    perceptionEnd,
 })
