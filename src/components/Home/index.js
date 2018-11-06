@@ -10,8 +10,8 @@ class Home extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <Link to="/shulte" className="">Shulte</Link>
-          {/* <Link to="/shulte-r-b" className="">Shulte red/black</Link> */}
+          <Link to="/shulte" className="">Таблица Шульте</Link>
+          <Link to="/perception1">Корректурная проба 1</Link>
         </header>
         
       </div>

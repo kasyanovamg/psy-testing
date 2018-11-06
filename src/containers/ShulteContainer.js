@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Shulte from '../components/Shulte';
 import { startTraining } from '../actions/actionCreatorsStartButton';
-import { getShulteError, checkShulteEnd, checkTime } from '../actions/actionCreatorsShulte';
+import { getShulteError, checkShulteEnd, checkTime, shulteErrorCounter } from '../actions/actionCreatorsShulte';
 
 const mapStateToProps = (state) => {
     return {
@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
         shulteError: state.shulteError,
         shulteEnd: state.shulteEnd,
         time: state.checkTime,
+        error: state.errors,
     };
 };
 
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
         getShulteError: (bool) => dispatch(getShulteError(bool)),
         checkShulteEnd: (bool) => dispatch(checkShulteEnd(bool)),
         checkTime: (time) => dispatch(checkTime(time)),
+        shulteErrorCounter: (error) => dispatch(shulteErrorCounter(error)),
     };
 };
 

@@ -1,11 +1,12 @@
-.table {
+.grid {
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     width: 600px;
 }
-.cell {
-    padding: 10px 5px;
-    width: 100px;
+.letter {
+    padding: 5px 2px;
+    width: 30px;
     max-width: calc(20% - 12px);
     text-align: center;
     border: 1px solid black;

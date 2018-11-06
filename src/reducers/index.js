@@ -4,6 +4,7 @@ import {
     shulteError,
     shulteEnd,
     checkTime,
+    errors,
 } from './shulteReducers'
 
 export const commonReducer = combineReducers({
@@ -11,4 +12,5 @@ export const commonReducer = combineReducers({
     shulteError,
     shulteEnd,
     checkTime,
+    errors,
 })
