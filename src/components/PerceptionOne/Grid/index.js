@@ -3,20 +3,26 @@ import './styles.css'
 
 class Grid extends Component {
 
-    //  letters = Array(252).fill(this.props.letter);
-    letters = Array(4).fill(this.props.letter);
+    letters = Array(252).fill(this.props.letter);
+    // letters = Array(4).fill(this.props.letter);   // short array for testing
     newLetters = Array(4).fill(this.props.searchedLetter);
     longLetters = this.letters.concat(this.newLetters).sort(() => Math.random() - 0.5);
 
     guessedCells = [];
     cellVerify = (cell, index) => {
+        this.props.error(false);
         if (cell === this.props.searchedLetter && !this.guessedCells.includes(index) && this.guessedCells.length <= this.newLetters.length) {
             this.guessedCells.push(index)
+            if (this.newLetters.length === this.guessedCells.length) {
+                this.props.end(true)
+            }
         } else {
-            this.props.errorCounter(1)
+            this.props.error(true);
+            this.props.errorCounter(1);
         }
 
     }
+
     render() {
         return (
             <div className='grid' >

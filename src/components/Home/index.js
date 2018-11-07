@@ -12,6 +12,7 @@ class Home extends Component {
           </p>
           <Link to="/shulte" className="">Таблица Шульте</Link>
           <Link to="/perception1">Корректурная проба 1</Link>
+          <Link to="/perception2">Корректурная проба 2</Link>
         </header>
         
       </div>

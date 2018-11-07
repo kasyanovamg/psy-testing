@@ -12,7 +12,8 @@
     text-align: center;
     border: 1px solid black;
 }
-.letter:active {
+.letter:hover {
     transition: all .2s ease-in-out;
     transform: scale(1.06);
+    background-color: #e6e6e6;
 }

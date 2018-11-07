@@ -13,7 +13,10 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/shulte' component={ShulteContainer} />
-          <Route exact path='/perception1' component={PerceptionOneContainer} />
+          <Route exact path='/perception1' render={() =>
+            <PerceptionOneContainer letter='н' searchedLetter='и' />} />
+          <Route exact path='/perception2' render={() =>
+            <PerceptionOneContainer letter='н' searchedLetter='п' />} />
 
           <Redirect to='/' />
         </Switch>
