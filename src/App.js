@@ -9,7 +9,6 @@ class App extends Component {
   render() {
     return (
       <div className="page">
-
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/shulte' component={ShulteContainer} />
@@ -17,10 +16,8 @@ class App extends Component {
             <PerceptionOneContainer letter='н' searchedLetter='и' />} />
           <Route exact path='/perception2' render={() =>
             <PerceptionOneContainer letter='н' searchedLetter='п' />} />
-
           <Redirect to='/' />
         </Switch>
-
 
       </div>
     );
