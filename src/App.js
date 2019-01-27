@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import ShulteContainer from './containers/ShulteContainer';
-import PerceptionOneContainer from './containers/PerceptionOneContainer';
-import Home from './components/Home';
-import './App.css';
-
+import { Route, Redirect, Switch, Link } from 'react-router-dom';
+import Signin from './components/auth/SignIn';
+import Signup from './components/auth/SignUp';
 class App extends Component {
   render() {
     return (
-      <div className="page">
-
+      <div>
+        <header>
+          Header
+          <Link to='/signin'>Signin</Link>
+          <Link to='/signup'>Signup</Link>
+        </header>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/shulte' component={ShulteContainer} />
-          <Route exact path='/perception1' render={() =>
-            <PerceptionOneContainer letter='н' searchedLetter='и' />} />
-          <Route exact path='/perception2' render={() =>
-            <PerceptionOneContainer letter='н' searchedLetter='п' />} />
-
+          <Route exact path='/signin' component={Signin} />
+          <Route exact path='/signup' component={Signup} />
           <Redirect to='/' />
         </Switch>
-
-
       </div>
     );
   }
