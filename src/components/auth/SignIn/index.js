@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signIn } from '../../../actions/authActions'
 
@@ -31,7 +32,9 @@ class SignIn extends Component {
                         <input type="password" id='password' onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Login</button>
+                        <button className="btn pink lighten-1 z-depth-0">
+                                Login
+                        </button>
                         <div className="center red-text">
                             {authError && <p>{authError}</p>}
                         </div>
