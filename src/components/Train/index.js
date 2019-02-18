@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 //import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
@@ -14,8 +13,7 @@ const Train = (props) => {
     <div>
       <Navbar />
       Train
-            <Sample history={props.history} />
-      <Link to={'/summary'} >Summary</Link>
+      <Sample history={props.history} />
     </div>
   )
 }

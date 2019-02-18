@@ -6,6 +6,8 @@ import Signup from './components/auth/SignUp';
 import Test from './components/Test';
 import Summary from './components/Summary';
 import Train from './components/Train';
+import Sample from './components/Sample';
+import Shulte from './components/Sample/Shulte';
 
 class App extends Component {
   render() {
@@ -18,6 +20,8 @@ class App extends Component {
         <Route exact path='/train' component={Train} />
         <Route exact path='/profile' component={Summary} />
         <Route exact path='/summary' component={Summary} />
+        <Route exact path='/test/sample' component={Sample} />
+        <Route exact path='/test/shulte' component={Shulte} />
         <Redirect to='/' />
       </Switch>
     );

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createProject } from '../../actions/projectActions'
+import { createProject } from '../../../actions/projectActions'
 import { Redirect } from 'react-router-dom'
-import Navbar from '../Navbar';
+import Navbar from '../../Navbar';
 
-class CreateProject extends Component {
+class Shulte extends Component {
   state = {
     title: '',
     content: ''
@@ -57,4 +57,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProject)
+export default connect(mapStateToProps, mapDispatchToProps)(Shulte)

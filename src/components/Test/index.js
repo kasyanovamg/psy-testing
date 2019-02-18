@@ -1,10 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 //import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
-import Sample from '../Sample';
+import { Link, Redirect } from 'react-router-dom'
 import Navbar from '../Navbar';
 
 const Test = (props) => {
@@ -14,8 +12,8 @@ const Test = (props) => {
     <div>
       <Navbar />
       test
-            <Sample history={props.history} />
-      <Link to={'/summary'} >Summary</Link>
+      <Link to='/test/sample'>Sample</Link>
+      <Link to='/test/shulte'>Shulte</Link>
     </div>
   )
 }

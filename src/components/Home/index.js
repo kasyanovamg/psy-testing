@@ -6,8 +6,8 @@ const Home = (props) => {
     return (
         <div>
             <Navbar />
-            <Link to="/test" >Test</Link>
-            <Link to="/train" >Train</Link>
+            <div><Link to="/test" >Test</Link></div>
+            <div><Link to="/train" >Train</Link></div>
         </div>
     )
 }
