@@ -7,13 +7,13 @@ import { Redirect } from 'react-router-dom'
 import Sample from '../Sample';
 import Navbar from '../Navbar';
 
-const Test = (props) => {
+const Train = (props) => {
   const { auth } = props;
   if (!auth.uid) return <Redirect to='/signin' />
   return (
     <div>
       <Navbar />
-      test
+      Train
             <Sample history={props.history} />
       <Link to={'/summary'} >Summary</Link>
     </div>
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps)
-)(Test)
+)(Train)
