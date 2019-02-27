@@ -2,18 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 //import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import { Link, Redirect } from 'react-router-dom'
-import Navbar from '../Navbar';
+import { Link, Route, Redirect, Switch } from 'react-router-dom';
 
 const Test = (props) => {
   const { auth } = props;
   if (!auth.uid) return <Redirect to='/signin' />
   return (
-    <div>
-      <Navbar />
-      test
+    <div className="container">
       <Link to='/test/sample'>Sample</Link>
-      <Link to='/test/shulte'>Shulte</Link>
+      <Link to='/test/shulte'>shulte Start</Link>
     </div>
   )
 }

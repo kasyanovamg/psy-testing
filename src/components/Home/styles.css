@@ -1,0 +1,13 @@
+.home-container {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.home-item {
+    margin: 0 auto;
+    padding: 10px;
+}
+.home-item > a {
+    font-size: 42px;
+}

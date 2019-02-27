@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createProject } from '../../../actions/projectActions'
 import { Redirect } from 'react-router-dom'
-import Navbar from '../../Navbar';
 
 class Shulte extends Component {
   state = {
@@ -25,7 +24,6 @@ class Shulte extends Component {
     if (!auth.uid) return <Redirect to='/signin' /> 
     return (
       <div className="container">
-      <Navbar />
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Create a New Project</h5>
           <div className="input-field">

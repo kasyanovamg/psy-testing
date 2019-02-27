@@ -1,13 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Navbar from '../Navbar';
+import './styles.css'
 
 const Home = (props) => {
     return (
-        <div>
-            <Navbar />
-            <div><Link to="/test" >Test</Link></div>
-            <div><Link to="/train" >Train</Link></div>
+        <div className="container home-container">
+            <div className="home-item"><Link to="/test" >Test</Link></div>
+            <div className="home-item"><Link to="/train" >Train</Link></div>
         </div>
     )
 }
