@@ -2,43 +2,70 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createProject } from '../../../actions/projectActions'
 import { Redirect } from 'react-router-dom'
+import Information from './Information'
+import Timer from '../Timer'
+import './styles.css';
 
 class Shulte extends Component {
   state = {
-    title: '',
-    content: ''
+    error: false,
+    errorCounter: 0,
+    startTraining: false,
+    endTraining: false
   }
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(this.state);
-    this.props.createProject(this.state);
-    this.props.history.push('/');
+
+  tableLength = 25;
+  numbers = Array(this.tableLength).fill().map((e, i) => i + 1).sort(() => Math.random() - 0.5)
+  userNumbers = [0];
+  cellVerify = (cell) => {
+    this.setState({ error: false })
+    if (this.userNumbers.slice(-1)[0] + 1 === cell) {
+      this.userNumbers.push(cell);
+      if (this.userNumbers.slice(-1)[0] === this.tableLength) {
+      }
+    }
+    else {
+      this.setState({ error: true })
+      if (this.userNumbers.length <= this.tableLength && cell !== 25) {
+        let error = this.state.errorCounter + 1;
+        this.setState({ errorCounter: error })
+      }
+    }
   }
   render() {
     const { auth } = this.props;
-    if (!auth.uid) return <Redirect to='/signin' /> 
+    if (!auth.uid) return <Redirect to='/signin' />
     return (
-      <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Create a New Project</h5>
-          <div className="input-field">
-            <input type="text" id='title' onChange={this.handleChange} />
-            <label htmlFor="title">Project Title</label>
-          </div>
-          <div className="input-field">
-            <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
-            <label htmlFor="content">Project Content</label>
-          </div>
-          <div className="input-field">
-            <button className="btn pink lighten-1">Create</button>
-          </div>
-        </form>
+      <div className='contents'>
+        <p>Тренировка различных аспектов внимания</p>
+        <div className='message'>
+            <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>
+            <button className='start-btn' onClick={() => this.setState({ startTraining: true })}>Начать</button>
+        </div>
+        {this.state.startTraining &&
+          <React.Fragment>
+            <Information
+              error={this.state.error}
+              end={this.state.endTraining}
+              time={this.props.time}
+              errors={this.props.error}
+              errorMessage={'Неверное число!'}
+              instructionNote={'Найдите числа!'}
+            />
+
+            <div className='table' >
+              {
+                this.numbers.map((e) =>
+                  <div key={e} onClick={() => this.cellVerify(e)} className='cell'>{e}</div>)
+              }
+            </div>
+            {!this.state.endTraining && <Timer getTime={this.props.checkTime} />}
+          </React.Fragment>
+        }
+
       </div>
+
+
     )
   }
 }
