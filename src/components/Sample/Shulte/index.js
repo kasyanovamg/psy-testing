@@ -22,6 +22,7 @@ class Shulte extends Component {
     if (this.userNumbers.slice(-1)[0] + 1 === cell) {
       this.userNumbers.push(cell);
       if (this.userNumbers.slice(-1)[0] === this.tableLength) {
+        this.setState({ endTraining: true })
       }
     }
     else {

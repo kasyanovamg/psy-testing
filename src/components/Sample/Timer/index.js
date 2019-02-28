@@ -17,7 +17,7 @@ class Timer extends Component {
         this.setState({ timer });
     }
     componentWillUnmount() {
-        this.props.getTime(this.state.counter);
+       // this.props.getTime(this.state.counter);
         clearInterval(this.state.timer);
     }
 
