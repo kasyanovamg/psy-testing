@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 //import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Test = (props) => {
   const { auth } = props;
