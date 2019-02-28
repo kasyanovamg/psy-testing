@@ -1,4 +1,4 @@
-const initState = {}
+export const initState = {}
 
 const projectReducer = (state = initState, action) => {
   console.log("State in project reducer", action, state)

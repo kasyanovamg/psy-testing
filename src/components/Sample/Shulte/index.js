@@ -60,7 +60,7 @@ class Shulte extends Component {
                   <div key={e} onClick={() => this.cellVerify(e)} className='cell'>{e}</div>)
               }
             </div>
-            {!this.state.endTraining && <Timer getTime={this.props.checkTime} />}
+            {!this.state.endTraining && <Timer />}
           </React.Fragment>
         }
 

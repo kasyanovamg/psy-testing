@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {setTime} from '../../../actions/testHelpers';
 
 class Timer extends Component {
     state = {
@@ -17,7 +19,7 @@ class Timer extends Component {
         this.setState({ timer });
     }
     componentWillUnmount() {
-       // this.props.getTime(this.state.counter);
+        this.props.setTime(this.state.counter);
         clearInterval(this.state.timer);
     }
 
@@ -31,5 +33,17 @@ class Timer extends Component {
     }
 }
 
-
-export default Timer;
+const mapStateToProps = (state, props) => {
+    return {
+       
+    }
+}
+  
+  const actions = {
+    setTime
+  };
+  
+  export default connect(
+      mapStateToProps,
+      actions
+    )(Timer);
