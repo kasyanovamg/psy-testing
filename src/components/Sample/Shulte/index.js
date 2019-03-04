@@ -39,17 +39,20 @@ class Shulte extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
-        <div className='message'>
+        {!this.state.startTraining &&
+          <div className='message'>
             <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>
             <button className='start-btn' onClick={() => this.setState({ startTraining: true })}>Начать</button>
-        </div>
+          </div>
+        }
+
         {this.state.startTraining &&
           <React.Fragment>
             <Information
               error={this.state.error}
               end={this.state.endTraining}
-              time={this.props.time}
-              errors={this.props.error}
+              //time={this.props.time}
+              errors={this.state.errorCounter}
               errorMessage={'Неверное число!'}
               instructionNote={'Найдите числа!'}
             />
@@ -73,7 +76,8 @@ class Shulte extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    time: state.current.setTime
   }
 }
 

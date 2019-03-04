@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const Information = ({ error = false, end = false, time = 0, errors = 0, errorMessage='Ошибка', instructionNote='' }) => {
-    return (
-        <div className='info'>
-            {
-                end ? <p>Тестирование завершено! Ваше время: {time} сек. Вы сделали {errors} ошибок.</p> :
-                    error ? <p className='info__error'>{errorMessage}</p> :
-                        <p>{instructionNote}</p>
-            }
-        </div>
-    )
+class Information extends Component {
+    componentDidUpdate(prevProps) {
+        return prevProps.time !== this.props.time || prevProps.errors !== this.props.errors;
+    }
+    render() {
+        const {end, errors, error, errorMessage, instructionNote, time} = this.props;
+        return (
+            <div className='info'>
+                {
+                    end ? <p>Тестирование завершено! Ваше время: {time} сек. Количество ошибок: {errors}.</p> :
+                        error ? <p className='info__error'>{errorMessage}</p> :
+                            <p>{instructionNote}</p>
+                }
+            </div>
+        )
+    }
 }
 
-export default Information;
+const mapStateToProps = (state) => {
+    return {
+        time: state.current.setTime
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Information)
