@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createProject } from '../../../actions/projectActions'
+import { submitResult } from '../../../actions/generalHelpers'
 import { Redirect } from 'react-router-dom'
 import Information from './Information'
 import Timer from '../Timer'
@@ -51,7 +52,6 @@ class Shulte extends Component {
             <Information
               error={this.state.error}
               end={this.state.endTraining}
-              //time={this.props.time}
               errors={this.state.errorCounter}
               errorMessage={'Неверное число!'}
               instructionNote={'Найдите числа!'}
@@ -66,10 +66,8 @@ class Shulte extends Component {
             {!this.state.endTraining && <Timer />}
           </React.Fragment>
         }
-
+        {this.state.endTraining && <button className="next" onClick={()=>submitResult(this.props.time)}>Next</button>}
       </div>
-
-
     )
   }
 }
@@ -83,7 +81,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProject: (project) => dispatch(createProject(project))
+    createProject: (project) => dispatch(createProject(project)),
+    submitResult: (result) => dispatch(submitResult(result))
   }
 }
 

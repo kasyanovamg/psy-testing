@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
-import { SET_TIME } from '../actions/testHelpers';
+import { SUBMIT_RESULT } from '../actions/generalHelpers';
 
-export const setTime = (state = 0, action) => {
+export const submitResult = (state = {}, action) => {
+    console.log(action)
     switch (action.type) {
-        case SET_TIME:
+        case SUBMIT_RESULT:
             return action.payload.currentTime;
         default:
             return state;
@@ -11,5 +12,5 @@ export const setTime = (state = 0, action) => {
 };
 
 export default combineReducers({
-    setTime
+    submitResult
 })
