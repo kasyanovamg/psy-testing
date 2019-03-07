@@ -66,7 +66,7 @@ class Shulte extends Component {
             {!this.state.endTraining && <Timer />}
           </React.Fragment>
         }
-        {this.state.endTraining && <button className="next" onClick={()=>submitResult(this.props.time)}>Next</button>}
+        {this.state.endTraining && <button className="next" onClick={() => this.props.submitResult(this.props.time)}>Next</button>}
       </div>
     )
   }
