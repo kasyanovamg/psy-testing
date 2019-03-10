@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
-import { SUBMIT_RESULT } from '../actions/generalHelpers';
+import { SUBMIT_SHULTE } from '../actions/generalHelpers';
 
-export const submitResult = (state = {}, action) => {
-    console.log("IM HERE!!!! ", action)
+export const submitShulte = (state = {}, action) => {
+    console.log(action.payload)
     switch (action.type) {
-        case SUBMIT_RESULT:
+        case SUBMIT_SHULTE:
             return {
                 ...state,
-                Shulte: action.payload.result
+                time: action.payload.result.time,
+                errors: action.payload.result.errors
             };
         default:
             return state;
@@ -15,5 +16,5 @@ export const submitResult = (state = {}, action) => {
 };
 
 export default combineReducers({
-    submitResult
+    submitShulte
 })
