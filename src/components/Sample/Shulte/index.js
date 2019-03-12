@@ -66,10 +66,15 @@ class Shulte extends Component {
             {!this.state.endTraining && <Timer />}
           </React.Fragment>
         }
-        {this.state.endTraining &&
+        {this.state.endTraining && <>
           <button className="next" onClick={() =>
             this.props.submitResult({ time: this.props.time, errors: this.state.errorCounter })
-          }>Next</button>}
+
+          }>Next</button>
+          <button className="next" onClick={() =>
+            this.props.createProject(this.props.project)
+          }>Submit</button>
+        </>}
       </div>
     )
   }
@@ -78,7 +83,8 @@ class Shulte extends Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
-    time: state.current.setTime
+    time: state.current.setTime,
+    project: state.result
   }
 }
 
