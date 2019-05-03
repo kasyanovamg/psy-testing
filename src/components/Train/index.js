@@ -4,14 +4,12 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import Sample from '../Sample';
-import Navbar from '../Navbar';
 
 const Train = (props) => {
   const { auth } = props;
   if (!auth.uid) return <Redirect to='/signin' />
   return (
     <div>
-      <Navbar />
       Train
       <Sample history={props.history} />
     </div>

@@ -17,7 +17,7 @@ class App extends Component {
       <>
         <Navbar />
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/psy-testing' component={Home} />
           <Route exact path='/signin' component={Signin} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/test' component={Test} />
@@ -26,7 +26,7 @@ class App extends Component {
           <Route exact path='/summary' component={Summary} />
           <Route exact path='/test/sample' component={Sample} />
           <Route exact path='/test/shulte' component={Shulte} />
-          <Redirect to='/' />
+          <Redirect to='/psy-testing' />
         </Switch>
       </>
     );
