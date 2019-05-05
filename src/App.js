@@ -8,6 +8,7 @@ import Summary from './components/Summary';
 import Train from './components/Train';
 import Sample from './components/Sample';
 import Shulte from './components/Sample/Shulte';
+import Perception from './components/Sample/Perception';
 import Navbar from './components/Navbar';
 import './styles.css';
 
@@ -26,6 +27,7 @@ class App extends Component {
           <Route exact path='/summary' component={Summary} />
           <Route exact path='/test/sample' component={Sample} />
           <Route exact path='/test/shulte' component={Shulte} />
+          <Route exact path='/test/perception' component={Perception} />
           <Redirect to='/psy-testing' />
         </Switch>
       </>

@@ -1,0 +1,19 @@
+.grid {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+}
+.letter {
+    cursor: pointer;
+    padding: 5px 2px;
+    width: 30px;
+    max-width: calc(20% - 12px);
+    text-align: center;
+    border: 1px solid black;
+}
+.letter:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.06);
+    background-color: #e6e6e6;
+}
