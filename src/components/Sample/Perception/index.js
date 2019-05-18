@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import Instructions from '../Instructions';
 import Timer from '../Timer';
-import Information from '../Information';
+import Information from '../Shulte/Information';
 import Grid from './Grid'
 
 class Perception extends Component {
-    letter = this.props.letter;
-    searchedLetter = this.props.searchedLetter;
+    state = {
+        startTraining: false,
+    };
+    letter = 'н';
+    searchedLetter = 'п';
     render() {
         return (
             <div className='contents'>
-                <p>Корректурная проба</p>
-                <Instructions message={`Найдите все буквы "${this.searchedLetter}"`} startTraining={this.props.startTraining} />
+                <p>Корректурная проба</p>{!this.state.startTraining &&
+                <div className='message'>
+                    <span className='start-message'>{`Найдите все буквы "${this.searchedLetter}"`}</span>
+                    <button className='start-btn' onClick={() => this.setState({ startTraining: true })}>Начать</button>
+                </div>
+                }
                 {this.props.start &&
                     <React.Fragment>
                         <Information error={this.props.errorCheck} end={this.props.perceptionEnd} time={this.props.time} 

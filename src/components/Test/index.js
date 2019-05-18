@@ -13,6 +13,8 @@ const Test = (props) => {
       {/* <Link to='/test/sample'>Sample</Link>  */}
       <div className="test-home">      
         <Link to='/test/shulte'>Start Shulte Test</Link>
+      <br/>
+        <Link to='/test/perception'>Start Perception Test</Link>
       </div>
     </div>
   )
