@@ -34,6 +34,11 @@ class Shulte extends Component {
       }
     }
   }
+
+  onSubmit = (time, counter, project) => {
+    this.props.submitResult({time: time, errors: counter});
+    this.props.createProject(project)
+  }
   render() {
     const { auth } = this.props;
     if (!auth.uid) return <Redirect to='/signin' />
@@ -43,10 +48,12 @@ class Shulte extends Component {
         {!this.state.startTraining &&
           <div className='message'>
             <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>
-            <button className='start-btn' onClick={() => this.setState({ startTraining: true })}>Начать</button>
+            <button className='start-btn' onClick={() =>
+              this.setState({ startTraining: true })}>
+              Начать
+            </button>
           </div>
         }
-
         {this.state.startTraining &&
           <React.Fragment>
             <Information
@@ -66,15 +73,11 @@ class Shulte extends Component {
             {!this.state.endTraining && <Timer />}
           </React.Fragment>
         }
-        {this.state.endTraining && <>
-          <button className="next" onClick={() =>
-            this.props.submitResult({ time: this.props.time, errors: this.state.errorCounter })
-
-          }>Next</button>
-          <button className="next" onClick={() =>
-            this.props.createProject(this.props.project)
-          }>Submit</button>
-        </>}
+        {this.state.endTraining &&
+          //two buttons did better job, one button is next and the final button is submit
+          <button className='next' onClick={() =>
+            this.onSubmit(this.props.time, this.state.errorCounter, this.props.project)}>Submit</button>
+        }
       </div>
     )
   }

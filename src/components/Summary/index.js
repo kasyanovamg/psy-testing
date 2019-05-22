@@ -4,10 +4,10 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 
 
-const Summary = ({ projects }) => {
+const Summary = ({ projects, auth }) => {
   return (
     <div className="card z-depth-0 project-summary">
-      {projects && projects.length && projects.map(project =>
+      {projects && projects.length && projects.filter(project => project.authorId === auth.uid).map(project =>
         <div className="card-content grey-text text-darken-3" key={project.id}>
           <p>Name: {project.authorFirstName} {project.authorLastName}</p>
           <p className="grey-text">{project.createdAt && project.createdAt.toDate().toString()}</p>
