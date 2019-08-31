@@ -1,8 +1,20 @@
 import { combineReducers } from "redux";
-import { SUBMIT_SHULTE } from '../actions/generalHelpers';
+import {SUBMIT_PERCEPTION, SUBMIT_SHULTE, SUBMIT_SHULTE_RED} from '../actions/generalHelpers';
 
-export const submitShulte = (state = {}, action) => {
-    console.log(action.payload)
+export const perceptionResult = (state = {}, action) => {
+    switch (action.type) {
+        case SUBMIT_PERCEPTION:
+            return {
+                ...state,
+                time: action.payload.result.time,
+                errors: action.payload.result.errors
+            };
+        default:
+            return state;
+    }
+};
+
+export const shulteResult = (state = {}, action) => {
     switch (action.type) {
         case SUBMIT_SHULTE:
             return {
@@ -15,6 +27,21 @@ export const submitShulte = (state = {}, action) => {
     }
 };
 
+export const shulteRedResult = (state = {}, action) => {
+    switch (action.type) {
+        case SUBMIT_SHULTE_RED:
+            return {
+                ...state,
+                time: action.payload.result.time,
+                errors: action.payload.result.errors
+            };
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
-    submitShulte
+    perceptionResult,
+    shulteResult,
+    shulteRedResult
 })
