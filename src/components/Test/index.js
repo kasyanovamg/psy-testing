@@ -17,6 +17,8 @@ const Test = (props) => {
         <Link to='/test/perception'>Start Perception Test</Link>
         <br/>
         <Link to='/test/shulte-red'>Start Shulte red-black Test</Link>
+        <br/>
+        <Link to='/test/count'>Start Count Test</Link>
       </div>
     </div>
   )

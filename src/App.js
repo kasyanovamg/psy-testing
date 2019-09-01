@@ -10,6 +10,7 @@ import Sample from './components/Sample';
 import Shulte from './components/Sample/Shulte';
 import ShulteRed from './components/Sample/ShulteRed';
 import Perception from './components/Sample/Perception';
+import Count from './components/Sample/Count';
 import Navbar from './components/Navbar';
 import './styles.css';
 
@@ -30,7 +31,7 @@ class App extends Component {
           <Route exact path='/test/shulte' component={Shulte} />
           <Route exact path='/test/shulte-red' component={ShulteRed} />
           <Route exact path='/test/perception' component={Perception} />
-
+          <Route exact path='/test/count' component={Count} />
           <Redirect to='/psy-testing' />
         </Switch>
       </>
