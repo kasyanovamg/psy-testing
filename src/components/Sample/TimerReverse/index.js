@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {setTime} from '../../../actions/testHelpers';
+//import {setTime} from '../../../actions/testHelpers';
 
-class Timer extends Component {
+class TimerReverse extends Component {
   state = {
     timer: null,
-    counter: 0
+    counter: this.props.maxTime
   };
 
   tick = () => {
-    this.setState({
-      counter: this.state.counter + 1
-    });
+    if (this.state.counter > 1) {
+      this.setState({
+        counter: this.state.counter - 1
+      })
+    } else  {
+      this.setState({
+        counter: this.state.counter - 1
+      });
+      this.props.passedFunction();
+      clearInterval(this.state.timer);
+    }
   };
 
   componentDidMount() {
@@ -19,7 +27,7 @@ class Timer extends Component {
     this.setState({ timer });
   }
   componentWillUnmount() {
-    this.props.setTime(this.state.counter);
+    //this.props.setTime(this.state.counter); - не нужно в рамках обратного отчета
     clearInterval(this.state.timer);
   }
 
@@ -37,13 +45,13 @@ const mapStateToProps = (state, props) => {
   return {
 
   }
-};
+}
 
 const actions = {
-  setTime
+  //setTime
 };
 
 export default connect(
   mapStateToProps,
   actions
-)(Timer);
+)(TimerReverse);

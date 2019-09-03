@@ -1,11 +1,14 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {createProject} from '../../../actions/projectActions'
-import {submitShulteRed} from '../../../actions/generalHelpers'
-import {Redirect} from 'react-router-dom'
-import Information from '../Shulte/Information'
-import Timer from '../Timer'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {createProject} from '../../../actions/projectActions';
+import {submitShulteRed} from '../../../actions/generalHelpers';
+import {Redirect} from 'react-router-dom';
+import Information from '../Shulte/Information';
+import TimerReverse from '../TimerReverse';
+import { Numbers } from "./Numbers";
 import './styles.css';
+
+const lineLength = 3; //23;
 
 class Count extends Component {
   state = {
@@ -13,7 +16,8 @@ class Count extends Component {
     errorCounter: 0,
     startTraining: false,
     endTraining: false,
-    result: {}
+    result: {},
+    currentRow: 0,
   };
 
   handleChange = (e) => {
@@ -21,14 +25,17 @@ class Count extends Component {
       [e.target.id]: e.target.value
     })
   };
-  lineLength = 3; //23;
-  firstNumber = Array(this.lineLength).fill().map((e, i) => Math.floor(Math.random() * (10 - 1)) + 1);
-  secondNumber = Array(this.lineLength).fill().map((e, i) => Math.floor(Math.random() * (10 - 1)) + 1);
-  sign = Array(this.lineLength).fill().map((e) => Math.round(Math.random()));
+
 
   getResult(first, second, sign) {
     return sign ? first + second : first - second;
   }
+
+  rowLength = Array(5).fill('');
+
+  startNextRow = (i) => {
+    this.setState({currentRow: i});
+  };
 
   render() {
     const {auth} = this.props;
@@ -55,23 +62,30 @@ class Count extends Component {
             instructionNote={'Найдите числа!'}
           />
 
-          <div>
-            {
-              this.firstNumber.map((number, i) => (
-                <div key={i}>
-                  <div>{number}</div>
-                  <div> {this.sign[i] ? "+" : "-"} </div>
-                  <div>{this.secondNumber[i]}</div>
-                  <input onChange={this.handleChange} id={i}/>
-                </div>
-              ))
-              // this.numbers.map((e) =>
-              //   <div className={e.slice(-1) === 'r' ? 'red cell-wide' : 'cell-wide'}
-              //        key={e} onClick={() => this.cellVerify(e)}>{parseInt(e)}</div>)
-            }
-            <button>Next Line</button>
-          </div>
-          {!this.state.endTraining && <Timer/>}
+          {
+            this.rowLength.map((item, i) =>
+              (<div key={i} className='number-container'>
+                {
+                  Array(lineLength).fill().map((number, j) => (
+                    <Numbers
+                      key={j}
+                      elIndex={j}
+                      onChange={this.handleChange}
+                      disabled={i !== this.state.currentRow}
+                      lineLength={lineLength}
+                    />
+                  ))
+                }
+                <button onClick={() => this.startNextRow(i + 1)}>Next Line</button>
+
+                {i === this.state.currentRow &&
+                <TimerReverse maxTime={5} passedFunction={() => this.startNextRow(i + 1)}/>
+                }
+
+              </div>)
+            )
+          }
+
         </React.Fragment>
         }
         {this.state.endTraining &&

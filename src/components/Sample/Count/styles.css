@@ -50,3 +50,10 @@
   0%{opacity: 0.1;}
   100%{opacity: 1;}
 }
+
+.number-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 20px auto;
+}
