@@ -18,20 +18,10 @@ class Count extends Component {
     endTraining: false,
     result: {},
     currentRow: 0,
+    answer: {},
   };
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  };
-
-
-  getResult(first, second, sign) {
-    return sign ? first + second : first - second;
-  }
-
-  rowLength = Array(5).fill('');
+  rowLength = Array(2).fill('');
 
   startNextRow = (i) => {
     this.setState({currentRow: i});
@@ -70,7 +60,6 @@ class Count extends Component {
                     <Numbers
                       key={j}
                       elIndex={j}
-                      onChange={this.handleChange}
                       disabled={i !== this.state.currentRow}
                       lineLength={lineLength}
                     />
@@ -79,7 +68,7 @@ class Count extends Component {
                 <button onClick={() => this.startNextRow(i + 1)}>Next Line</button>
 
                 {i === this.state.currentRow &&
-                <TimerReverse maxTime={5} passedFunction={() => this.startNextRow(i + 1)}/>
+                <TimerReverse maxTime={55} passedFunction={() => this.startNextRow(i + 1)}/>
                 }
 
               </div>)
