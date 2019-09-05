@@ -4,11 +4,10 @@ import {createProject} from '../../../actions/projectActions';
 import {submitShulteRed} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
 import Information from '../Shulte/Information';
-import TimerReverse from '../TimerReverse';
-import { Numbers } from "./Numbers";
+import {Rows} from './Rows';
 import './styles.css';
 
-const lineLength = 3; //23;
+export const lineLength = 3; //23;
 
 class Count extends Component {
   state = {
@@ -19,6 +18,11 @@ class Count extends Component {
     result: {},
     currentRow: 0,
     answer: {},
+  };
+
+  setAnswer = (ans) => {
+    console.log(ans)
+    // this.setState(state =>( {answer: {...state.answer, ans}}))
   };
 
   rowLength = Array(2).fill('');
@@ -54,24 +58,14 @@ class Count extends Component {
 
           {
             this.rowLength.map((item, i) =>
-              (<div key={i} className='number-container'>
-                {
-                  Array(lineLength).fill().map((number, j) => (
-                    <Numbers
-                      key={j}
-                      elIndex={j}
-                      disabled={i !== this.state.currentRow}
-                      lineLength={lineLength}
-                    />
-                  ))
-                }
-                <button onClick={() => this.startNextRow(i + 1)}>Next Line</button>
-
-                {i === this.state.currentRow &&
-                <TimerReverse maxTime={55} passedFunction={() => this.startNextRow(i + 1)}/>
-                }
-
-              </div>)
+              <Rows
+                key={i}
+                row={i}
+                currentRow={this.state.currentRow}
+                time={55}
+                setAnswer={this.setAnswer}
+                startNextRow={this.startNextRow}
+              />
             )
           }
 

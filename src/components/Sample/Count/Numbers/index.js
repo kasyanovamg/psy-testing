@@ -18,19 +18,20 @@ export class Numbers extends Component {
     const first = parseInt(this.firstNumber);
     const second = parseInt(this.secondNumber);
     const result = this.sign  ? first + second : first - second;
-    console.log(parseInt(this.state.value), this.sign, result);
-    console.log(typeof parseInt(this.state.value), typeof result);
-    return parseInt(this.state.value) === result ? console.log("yes") : console.log("No")
+    //return parseInt(this.state.value) === result ? console.log("yes") : console.log("No")
+    this.props.setAnswer({
+      index: this.props.elIndex,
+      res: parseInt(this.state.value) === result})
   }
 
   render() {
     const {firstNumber, secondNumber, sign} = this;
-    const {elIndex, disabled} = this.props;
+    const {disabled} = this.props;
 
     return (
-      <div key={elIndex}>
+      <div>{this.props.row} {this.props.elIndex}
         <div>{firstNumber}</div>
-        <div> {sign[elIndex] ? "+" : "-"} </div>
+        <div> {sign ? "+" : "-"} </div>
         <div>{secondNumber}</div>
         <input onChange={this.handleChange} disabled={disabled} onBlur={this.checkResult}/>
       </div>
