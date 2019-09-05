@@ -5,7 +5,7 @@ import {lineLength} from '../../Count'
 
 export class Rows extends Component {
   state = {
-    [this.props.row] : null,
+    [this.props.row] : [],
   }
 
   rowAnswer = (ans) => {
@@ -14,6 +14,7 @@ export class Rows extends Component {
 
   submitRow = () => {
     const {startNextRow, row} = this.props;
+    this.props.setAnswer(this.state[this.props.row])
     startNextRow(row + 1);
   }
 

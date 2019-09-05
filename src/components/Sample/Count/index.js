@@ -17,12 +17,12 @@ class Count extends Component {
     endTraining: false,
     result: {},
     currentRow: 0,
-    answer: {},
+    answer: [],
   };
 
   setAnswer = (ans) => {
     console.log(ans)
-    // this.setState(state =>( {answer: {...state.answer, ans}}))
+    this.setState( ({answer: {...this.state.answer, [this.state.currentRow]: ans } }))
   };
 
   rowLength = Array(2).fill('');
