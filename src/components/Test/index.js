@@ -12,13 +12,15 @@ const Test = (props) => {
     <div className="container">
       {/* <Link to='/test/sample'>Sample</Link>  */}
       <div className="test-home">
-        <Link to='/test/shulte'>Start Shulte Test</Link>
+        <Link to='/test/shulte'>Начать тест Шульте</Link>
         <br/>
-        <Link to='/test/perception'>Start Perception Test</Link>
+        <Link to='/test/shulte-red'>Начать тест Шульте в модификации Горбова</Link>
         <br/>
-        <Link to='/test/shulte-red'>Start Shulte red-black Test</Link>
+        <Link to='/test/perception'>Начать методику корректурные пробы</Link>
         <br/>
-        <Link to='/test/count'>Start Count Test</Link>
+        <Link to='/test/count'>Начать методику счет по Крепелину</Link>
+        <br/>
+        <Link to='/test/memory-words'>Начать методику "Запоминание слов"</Link>
       </div>
     </div>
   )

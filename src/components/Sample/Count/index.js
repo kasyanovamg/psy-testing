@@ -7,7 +7,7 @@ import Information from '../Shulte/Information';
 import {Rows} from './Rows';
 import './styles.css';
 
-export const lineLength = 3; //23;
+export const lineLength = 23; //23;
 
 class Count extends Component {
   state = {
@@ -25,7 +25,7 @@ class Count extends Component {
     this.setState( ({answer: {...this.state.answer, [this.state.currentRow]: ans } }))
   };
 
-  rowLength = Array(2).fill('');
+  rowLength = Array(10).fill(''); //сколько строк
 
   startNextRow = (i) => {
     this.setState({currentRow: i});
@@ -62,7 +62,7 @@ class Count extends Component {
                 key={i}
                 row={i}
                 currentRow={this.state.currentRow}
-                time={55}
+                time={30}
                 setAnswer={this.setAnswer}
                 startNextRow={this.startNextRow}
               />

@@ -62,7 +62,7 @@ class ShulteRed extends Component {
         <p>Тренировка различных аспектов внимания</p>
         {!this.state.startTraining &&
         <div className='message'>
-          <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>
+          <span className='start-message'>{'Начните поиск цифр'}</span>
           <button className='start-btn' onClick={() =>
             this.setState({startTraining: true})}>
             Начать

@@ -11,7 +11,7 @@ const Navbar = (props) => {
     return (
         <nav className="nav-wrapper">
             <div className="container inner-wrapper">
-                <Link to='/'>Home</Link>
+                <Link to='/'>Главная</Link>
                 {links}
             </div>
         </nav>

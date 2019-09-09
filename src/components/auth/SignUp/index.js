@@ -25,25 +25,25 @@ class Signup extends Component {
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Sign Up</h5>
+          <h5 className="grey-text text-darken-3">Регистрация </h5>
           <div className="input-field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Почта </label>
             <input type="email" id='email' onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Пароль </label>
             <input type="password" id='password' onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">Имя </label>
             <input type="text" id='firstName' onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Фамилия </label>
             <input type="text" id='lastName' onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+            <button className="btn pink lighten-1 z-depth-0">Зарегистрироваться</button>
             <div className="center red-text">
               { authError ? <p>{authError}</p> : null }
             </div>

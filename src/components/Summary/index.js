@@ -6,16 +6,16 @@ import { connect } from 'react-redux'
 
 const Summary = ({ projects, auth }) => {
   return (
-    <div className="card z-depth-0 project-summary">
+    <div className="card z-depth-0 project-summary container">
       {projects && projects.length && projects.filter(project => project.authorId === auth.uid).map(project =>
         <div className="card-content grey-text text-darken-3" key={project.id}>
-          <p>Name: {project.authorFirstName} {project.authorLastName}</p>
+          <p>Имя: {project.authorFirstName} {project.authorLastName}</p>
           <p className="grey-text">{project.createdAt && project.createdAt.toDate().toString()}</p>
-          {project.submitShulte &&
+          {project.shulteResult &&
             <div>
-              <h4>Shulte results</h4>
-              <div>Time: {project.submitShulte && project.submitShulte.time}</div>
-              <div>Errors: {project.submitShulte && project.submitShulte.errors}</div>
+              <h4>Результат методики "Таблицы шульте"</h4>
+              <div>Время: {project.shulteResult && project.shulteResult.time}</div>
+              <div>Ошибки: {project.shulteResult && project.shulteResult.errors}</div>
             </div>
           }
       <hr />

@@ -29,11 +29,13 @@ export class Numbers extends Component {
     const {disabled} = this.props;
 
     return (
-      <div>{this.props.row} {this.props.elIndex}
+      <div className='cell-container'>
         <div>{firstNumber}</div>
         <div> {sign ? "+" : "-"} </div>
         <div>{secondNumber}</div>
-        <input onChange={this.handleChange} disabled={disabled} onBlur={this.checkResult}/>
+        <input onChange={this.handleChange} disabled={disabled} onBlur={this.checkResult}
+        style={{width: '36px'}}
+        />
       </div>
     )
   }

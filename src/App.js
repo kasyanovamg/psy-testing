@@ -11,6 +11,7 @@ import Shulte from './components/Sample/Shulte';
 import ShulteRed from './components/Sample/ShulteRed';
 import Perception from './components/Sample/Perception';
 import Count from './components/Sample/Count';
+import MemoryWords from './components/Sample/MemoryWords';
 import Navbar from './components/Navbar';
 import './styles.css';
 
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path='/test/shulte-red' component={ShulteRed} />
           <Route exact path='/test/perception' component={Perception} />
           <Route exact path='/test/count' component={Count} />
+          <Route exact path='/test/memory-words' component={MemoryWords} />
           <Redirect to='/psy-testing' />
         </Switch>
       </>

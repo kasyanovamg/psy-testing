@@ -5,8 +5,8 @@ import './styles.css'
 const Home = (props) => {
     return (
         <div className="container home-container">
-            <div className="home-item"><Link to="/test" >Test</Link></div>
-            <div className="home-item"><Link to="/train" >Train</Link></div>
+            <div className="home-item"><Link to="/test" >Начать тренировку</Link></div>
+            {/*<div className="home-item"><Link to="/train" >Train</Link></div>*/}
         </div>
     )
 }

@@ -57,3 +57,12 @@
   align-items: center;
   margin: 20px auto;
 }
+
+.cell-container {
+  border: 1px solid black;
+  width: 40px;
+}
+
+.timer-container {
+  width: 60px
+}
