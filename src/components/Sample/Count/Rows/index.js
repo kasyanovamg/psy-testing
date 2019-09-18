@@ -18,8 +18,14 @@ export class Rows extends Component {
     startNextRow(row + 1);
   }
 
+  submitLastRow = () => {
+    this.submitRow();
+    this.props.endTraining();
+
+  }
+
   render() {
-    const {row, currentRow, time, setAnswer, startNextRow} = this.props;
+    const {row, currentRow, time, rowLength } = this.props;
     return (
       <div className='number-container'>
         {
@@ -34,10 +40,10 @@ export class Rows extends Component {
             />
           ))
         }
-        <button onClick={this.submitRow}>Next Line</button>
+        {rowLength === row ? <button onClick={this.submitLastRow}>Готово</button> : <button onClick={this.submitRow}>Следующая строка</button>}
         <div className='timer-container'>
           {row === currentRow &&
-          <TimerReverse maxTime={time} passedFunction={this.submitRow}/>
+          <TimerReverse maxTime={time} passedFunction={rowLength === row ? this.submitLastRow : this.submitRow}/>
           }
         </div>
       </div>
