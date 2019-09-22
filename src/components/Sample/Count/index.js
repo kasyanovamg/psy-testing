@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createProject} from '../../../actions/projectActions';
-import {submitShulteRed} from '../../../actions/generalHelpers';
+import {submitCount} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
 import Information from '../Shulte/Information';
 import {Rows} from './Rows';
@@ -22,8 +22,8 @@ class Count extends Component {
   };
 
   setAnswer = (ans) => {
-    console.log(ans)
-    this.setState( ({answer: {...this.state.answer, [this.state.currentRow]: ans } }))
+    console.log(ans);
+    this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}))
   };
 
   rowLength = Array(numberOfRows).fill(''); //сколько строк
@@ -80,7 +80,7 @@ class Count extends Component {
         }
         {this.state.endTraining &&
         <button className='next' onClick={() =>
-          this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})
+          this.props.submitResult(this.state.answer)
         }>Submit</button>
         }
       </div>
@@ -99,7 +99,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitShulteRed(result))
+    submitResult: (result) => dispatch(submitCount(result))
   }
 };
 
