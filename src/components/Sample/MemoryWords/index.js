@@ -5,6 +5,7 @@ import {submitMemoryWords} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import './styles.css';
 import TimerReverse from "../TimerReverse";
+import {Button} from "../../Button";
 
 const words = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь'].sort(() => Math.random() - 0.5);
 
@@ -36,6 +37,7 @@ class MemoryWords extends Component {
     if (!auth.uid) return <Redirect to='/signin'/>;
     return (
       <div className='contents'>
+        <p>Тренировка памяти</p>
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Запомните следующие слова'}</span>
@@ -50,11 +52,13 @@ class MemoryWords extends Component {
 
           {this.state.showWords && <TimerReverse maxTime={3} passedFunction={this.endMemorizing}/>}
 
-          {this.state.showWords && words.join(', ')}
+          {this.state.showWords && <div className='words'>{words.join(', ')}</div>}
           {!this.state.showWords && <div>
-            {words.map((word, i) => <div key={i}><input placeholder={'Введите слово'} onChange={this.handleChange}
-                                                        id={i}/></div>)}
-            <button onClick={this.checkWords}>Проверить</button>
+            {words.map((word, i) => <div key={i} className='input-wrapper'><input placeholder={'Введите слово'}
+                                                                                  onChange={this.handleChange}
+                                                                                  autoComplete="off"
+                                                                                  id={i}/></div>)}
+            <Button onClick={this.checkWords} text='Проверить' nameOfClass='next' />
           </div>}
 
         </React.Fragment>

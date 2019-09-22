@@ -1,0 +1,54 @@
+.button-main {
+    background: #d93434;
+    background-image: -webkit-linear-gradient(top, #d93434, #b82b2b);
+    background-image: -moz-linear-gradient(top, #d93434, #b82b2b);
+    background-image: -ms-linear-gradient(top, #d93434, #b82b2b);
+    background-image: -o-linear-gradient(top, #d93434, #b82b2b);
+    background-image: linear-gradient(to bottom, #d93434, #b82b2b);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+}
+
+.button-main:hover {
+    cursor: pointer;
+    background: #fc3c3c;
+    background-image: -webkit-linear-gradient(top, #fc3c3c, #d93434);
+    background-image: -moz-linear-gradient(top, #fc3c3c, #d93434);
+    background-image: -ms-linear-gradient(top, #fc3c3c, #d93434);
+    background-image: -o-linear-gradient(top, #fc3c3c, #d93434);
+    background-image: linear-gradient(to bottom, #fc3c3c, #d93434);
+    text-decoration: none;
+}
+
+.button-next {
+    background: #32a4e9;
+    background-image: -webkit-linear-gradient(top, #32a4e9, #1e59b8);
+    background-image: -moz-linear-gradient(top, #32a4e9, #1e59b8);
+    background-image: -ms-linear-gradient(top, #32a4e9, #1e59b8);
+    background-image: -o-linear-gradient(top, #32a4e9, #1e59b8);
+    background-image: linear-gradient(to bottom, #32a4e9, #1e59b8);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+    width: 110px;
+}
+
+.button-next:hover {
+    cursor: pointer;
+    background: #216cfc;
+    background-image: -webkit-linear-gradient(top, #216cfc, #32a4e9);
+    background-image: -moz-linear-gradient(top, #216cfc, #32a4e9);
+    background-image: -ms-linear-gradient(top, #216cfc, #32a4e9);
+    background-image: -o-linear-gradient(top, #216cfc, #32a4e9);
+    background-image: linear-gradient(to bottom, #216cfc, #32a4e9);
+    text-decoration: none;
+}

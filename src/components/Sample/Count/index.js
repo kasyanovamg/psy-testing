@@ -5,6 +5,7 @@ import {submitCount} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
 import Information from '../Shulte/Information';
 import {Rows} from './Rows';
+import {Button} from "../../Button";
 import './styles.css';
 
 export const lineLength = 2; //23;
@@ -26,7 +27,7 @@ class Count extends Component {
     this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}))
   };
 
-  rowLength = Array(numberOfRows).fill(''); //сколько строк
+  rowLength = Array(numberOfRows).fill('');
 
   startNextRow = (i) => {
     this.setState({currentRow: i});
@@ -45,10 +46,8 @@ class Count extends Component {
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Складывайте или вычитайте числа'}</span>
-          <button className='start-btn' onClick={() =>
-            this.setState({startTraining: true})}>
-            Начать
-          </button>
+          <Button text='Начать' onClick={() =>
+            this.setState({startTraining: true})}/>
         </div>
         }
         {this.state.startTraining &&
