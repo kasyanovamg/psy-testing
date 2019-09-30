@@ -7,9 +7,9 @@ import './styles.css'
 const SignedInLinks = (props) => {
     return (
         <div>
-            <ul className="nav-right">
-                <li><div onClick={props.signOut} className="logout" >Выход</div></li>
-                <li><NavLink to='/profile' className="">Профиль: {props.profile.firstName}</NavLink></li>
+            <ul className={props.className}>
+                <li><div onClick={props.signOut} className={props.className} >Выход</div></li>
+                <li><NavLink to='/profile' className={props.className}>Профиль: {props.profile.firstName}</NavLink></li>
             </ul>
         </div>
     )

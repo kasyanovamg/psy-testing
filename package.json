@@ -4,6 +4,8 @@
   "homepage": "https://kasyanovamg.github.io/psy-testing/",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.4.3",
+    "@material-ui/icons": "^4.4.3",
     "firebase": "^5.8.5",
     "react": "^16.9.0",
     "react-dom": "^16.5.2",
