@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom'
 import Information from '../Shulte/Information'
 import Timer from '../Timer'
 import './styles.css';
+import {Button} from "../../Button";
 
 class ShulteRed extends Component {
   state = {
@@ -16,8 +17,8 @@ class ShulteRed extends Component {
     countBackwards: false,
   };
 
-  redLength = 24;
-  blackLength = 25;
+  redLength = 24; //24
+  blackLength = 25; //25
   red = Array(this.redLength).fill().map((e, i) => i + 1 + 'r');
   black = Array(this.blackLength).fill().map((e, i) => i + 1 + 'b');
   numbers = this.red.concat(this.black).sort(() => Math.random() - 0.5);
@@ -52,6 +53,11 @@ class ShulteRed extends Component {
         }
       }
     }
+  };
+
+  setNext = () => {
+    this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.history.push('/test/perception');
   };
 
   render() {
@@ -90,10 +96,7 @@ class ShulteRed extends Component {
         </React.Fragment>
         }
         {this.state.endTraining &&
-        //two buttons did better job, one button is next and the final button is submit
-        <button className='next' onClick={() =>
-          this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})
-        }>Submit</button>
+        <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>
         }
       </div>
     )

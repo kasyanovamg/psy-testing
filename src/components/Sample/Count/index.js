@@ -8,8 +8,8 @@ import {Rows} from './Rows';
 import {Button} from "../../Button";
 import './styles.css';
 
-export const lineLength = 2; //23;
-const numberOfRows = 2; //10
+export const lineLength = 23; //23;
+const numberOfRows = 10; //10
 
 class Count extends Component {
   state = {
@@ -35,6 +35,11 @@ class Count extends Component {
 
   endTraining = () => {
     this.setState({endTraining: true});
+  };
+
+  setNext = () => {
+    this.props.submitResult(this.state.answer);
+    this.props.history.push('/test/memory-words');
   };
 
   render() {
@@ -77,11 +82,7 @@ class Count extends Component {
 
         </React.Fragment>
         }
-        {this.state.endTraining &&
-        <button className='next' onClick={() =>
-          this.props.submitResult(this.state.answer)
-        }>Submit</button>
-        }
+        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
       </div>
     )
   }

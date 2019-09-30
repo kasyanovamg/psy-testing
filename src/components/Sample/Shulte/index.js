@@ -5,6 +5,7 @@ import {submitShulte} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import Information from './Information'
 import Timer from '../Timer'
+import {Button} from "../../Button";
 import './styles.css';
 
 class Shulte extends Component {
@@ -12,10 +13,10 @@ class Shulte extends Component {
     error: false,
     errorCounter: 0,
     startTraining: false,
-    endTraining: false
+    endTraining: false,
   };
 
-  tableLength = 25;
+  tableLength = 25; //25
   numbers = Array(this.tableLength).fill().map((e, i) => i + 1).sort(() => Math.random() - 0.5);
   userNumbers = [0];
   cellVerify = (cell) => {
@@ -32,6 +33,11 @@ class Shulte extends Component {
         this.setState({errorCounter: error})
       }
     }
+  };
+
+  setNext = () => {
+    this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.history.push('/test/shulte-red');
   };
 
   render() {
@@ -69,16 +75,15 @@ class Shulte extends Component {
         </React.Fragment>
         }
         {this.state.endTraining &&
-        //two buttons did better job, one button is next and the final button is submit
-        <>
-          <button className='next' onClick={() =>
-            this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})}>Submit
-          </button>
-          <button className='next' onClick={() =>
-            this.props.createProject(this.props.project)
-          }>Submit Final
-          </button>
-        </>
+         // <button className='next' onClick={() =>
+        //  this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})}>Submit
+        //  </button>
+         // <button className='next' onClick={() =>
+        //  this.props.createProject(this.props.project)
+      // }>Submit Final
+      //    </button>
+
+        <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>
         }
       </div>
     )

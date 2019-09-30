@@ -5,6 +5,8 @@ import {createProject} from "../../../actions/projectActions";
 import {submitPerseption} from "../../../actions/generalHelpers";
 import {connect} from "react-redux";
 import './styles.css';
+import {Button} from "../../Button";
+import {Redirect} from "react-router-dom";
 
 class Perception extends Component {
   state = {
@@ -15,8 +17,8 @@ class Perception extends Component {
   };
   letter = 'н';
   searchedLetter = 'п';
-  letters = Array(252).fill(this.letter);
-  // letters = Array(4).fill(this.props.letter);   // short array for testing
+  gridLength = 252;  //252
+  letters = Array(this.gridLength).fill(this.letter);
   newLetters = Array(4).fill(this.searchedLetter);
   longLetters = this.letters.concat(this.newLetters).sort(() => Math.random() - 0.5);
 
@@ -34,8 +36,14 @@ class Perception extends Component {
 
   };
 
+  setNext = () => {
+    this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.history.push('/test/count');
+  };
+
   render() {
-    //TO DO: move grid over here so it can use same state, like shulte table
+    const {auth} = this.props;
+    if (!auth.uid) return <Redirect to='/signin'/>;
     return (
       <>
         <div className='contents'>
@@ -67,10 +75,7 @@ class Perception extends Component {
           </React.Fragment>
           }
         </div>
-        {this.state.endTraining &&
-        <button onClick={() => this.props.submitResult(
-          {time: this.props.time, errors: this.state.errorCounter}
-        )}>Submit</button>}
+        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
       </>
     );
   }

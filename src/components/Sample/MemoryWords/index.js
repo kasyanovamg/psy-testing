@@ -32,6 +32,11 @@ class MemoryWords extends Component {
     this.setState(({result: {...this.state.result, [e.target.id]: e.target.value}}))
   };
 
+  setNext = () => {
+    this.props.submitResult(this.state.correct);
+    this.props.history.push('/test/current-summary');
+  };
+
   render() {
     const {auth} = this.props;
     if (!auth.uid) return <Redirect to='/signin'/>;
@@ -67,9 +72,7 @@ class MemoryWords extends Component {
         //two buttons did better job, one button is next and the final button is submit
         <>
           <div>Воспроизведено слов правильно: {this.state.correct}</div>
-          <button className='next' onClick={() =>
-            this.props.submitResult(this.state.correct)}>Submit
-          </button>
+          <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>
         </>
         }
       </div>

@@ -13,6 +13,7 @@ import Perception from './components/Sample/Perception';
 import Count from './components/Sample/Count';
 import MemoryWords from './components/Sample/MemoryWords';
 import Navbar from './components/Navbar';
+import CurrentSummary from './components/CurrentSummary';
 import './styles.css';
 
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
           <Route exact path='/test/perception' component={Perception} />
           <Route exact path='/test/count' component={Count} />
           <Route exact path='/test/memory-words' component={MemoryWords} />
+          <Route exact path='/test/current-summary' component={CurrentSummary} />
           <Redirect to='/psy-testing' />
         </Switch>
       </>

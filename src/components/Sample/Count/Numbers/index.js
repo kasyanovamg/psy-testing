@@ -21,8 +21,8 @@ export class Numbers extends Component {
     //return parseInt(this.state.value) === result ? console.log("yes") : console.log("No")
     this.props.setAnswer({
       index: this.props.elIndex,
-      res: parseInt(this.state.value) === result})
-  }
+      res: parseInt(this.state.value) === result ? 1 : 0})
+  };
 
   render() {
     const {firstNumber, secondNumber, sign} = this;
