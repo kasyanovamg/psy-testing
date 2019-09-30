@@ -55,7 +55,7 @@ class MemoryWords extends Component {
         {this.state.startTraining &&
         <React.Fragment>
 
-          {this.state.showWords && <TimerReverse maxTime={3} passedFunction={this.endMemorizing}/>}
+          {this.state.showWords && <TimerReverse maxTime={30} passedFunction={this.endMemorizing}/>}
 
           {this.state.showWords && <div className='words'>{words.join(', ')}</div>}
           {!this.state.showWords && <div>

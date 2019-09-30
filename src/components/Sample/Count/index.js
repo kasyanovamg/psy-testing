@@ -72,7 +72,7 @@ class Count extends Component {
                 key={i}
                 row={i}
                 currentRow={this.state.currentRow}
-                time={10}
+                time={30}
                 setAnswer={this.setAnswer}
                 startNextRow={this.startNextRow}
                 endTraining={this.endTraining}
