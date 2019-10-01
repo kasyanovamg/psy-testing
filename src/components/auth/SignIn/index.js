@@ -72,7 +72,7 @@ const SignIn = (props) => {
             type="submit"
             color="primary"
             variant="contained"
-            style={{ marginRight: 20 }}
+            style={{ marginRight: 20,  backgroundColor: '#d8f0de', color: 'black' }}
           >
             Войти
           </Button>

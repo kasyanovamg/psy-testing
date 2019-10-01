@@ -1,4 +1,5 @@
-import {combineReducers} from "redux";
+import {persistCombineReducers} from 'redux-persist';
+import storageSession from 'redux-persist/lib/storage/session';
 import {
   SUBMIT_COUNT, SUBMIT_MEMORY_IMAGES,
   SUBMIT_MEMORY_WORDS,
@@ -83,11 +84,16 @@ export const memoryImagesResult = (state = {}, action) => {
   }
 };
 
-export default combineReducers({
-  perceptionResult,
-  shulteResult,
-  shulteRedResult,
-  countResult,
-  memoryWordsResult,
-  memoryImagesResult,
-})
+export default persistCombineReducers(
+  {
+    key: 'psyTesting',
+    storage: storageSession,
+  },
+  {
+    perceptionResult,
+    shulteResult,
+    shulteRedResult,
+    countResult,
+    memoryWordsResult,
+    memoryImagesResult,
+  })

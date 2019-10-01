@@ -4,6 +4,7 @@
 .container {
     margin: 0 auto;
     width: 1080px;
+    display: flex;
 }
 .next {
     margin: 0 auto;
