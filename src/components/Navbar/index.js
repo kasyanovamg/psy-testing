@@ -1,29 +1,45 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import SignedInLinks from './SignedInLinks'
-import SignedOutLinks from './SignedOutLinks'
-import { connect } from 'react-redux'
-import './styles.css'
+import React from "react";
+import { Link } from "react-router-dom";
+import { makeStyles, AppBar, Toolbar, Typography } from "@material-ui/core";
+import SignedInLinks from "./SignedInLinks";
+import SignedOutLinks from "./SignedOutLinks";
+import { connect } from "react-redux";
+import "./styles.css";
 
-const Navbar = (props) => {
-    const { auth, profile } = props;
-    const links = auth.uid ? <SignedInLinks profile={profile}/> : <SignedOutLinks />;
-    return (
-        <nav className="nav-wrapper">
-            <div className="container inner-wrapper">
-                <Link to='/'>Главная</Link>
-                {links}
-            </div>
-        </nav>
-    )
-}
+const useStyles = makeStyles(theme => ({
+  link: {
+      textDecoration: "none",
+      color: "white"
+  }
+}));
 
-const mapStateToProps = (state) => {
-    console.log(state);
-    return {
-        auth: state.firebase.auth,
-        profile: state.firebase.profile
-    }
-}
+const Navbar = props => {
+  const classes = useStyles();
+  const { auth, profile } = props;
+  const links = auth.uid ? (
+    <SignedInLinks profile={profile} className={classes.link} />
+  ) : (
+    <SignedOutLinks className={classes.link} />
+  );
+  return (
+    <AppBar position="static">
+      <Toolbar className="container inner-wrapper">
+        <Typography variant="h6">
+          <Link to="/" className={classes.link}>Главная</Link>
+        </Typography>
 
-export default connect(mapStateToProps)(Navbar)
+        {links}
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
