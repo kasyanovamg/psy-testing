@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
   container: {
     width: 600,
     padding: 15,
-    margin: "0 auto"
+    margin: "200px auto",
+    boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   },
   form: {
     flexDirection: "column",
@@ -116,6 +117,7 @@ const Signup = props => {
           value={formValues.isExperimentalGroup}
           onChange={setGroup}
           className={classes.radio}
+          defaultValue={formValues.group}
         >
           <FormControlLabel
             id="isExperimentalGroup"
@@ -135,7 +137,7 @@ const Signup = props => {
             type="submit"
             color="primary"
             variant="contained"
-            style={{ marginRight: 20 }}
+            style={{ marginRight: 20,  backgroundColor: '#d8f0de', color: 'black' }}
           >
             Зарегистрироваться
           </Button>
