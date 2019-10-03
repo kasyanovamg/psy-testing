@@ -9,7 +9,7 @@ import {Button} from "../../Button";
 import './styles.css';
 
 export const lineLength = 23; //23;
-const numberOfRows = 10; //10
+const numberOfRows = 10; //10 - always even number
 
 class Count extends Component {
   state = {
@@ -19,12 +19,13 @@ class Count extends Component {
     endTraining: false,
     result: {},
     currentRow: 0,
-    answer: [],
+    answer: {},
+    arrayAnswer: [],
   };
 
   setAnswer = (ans) => {
-    console.log(ans);
     this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}))
+    this.setState(({arrayAnswer: [...this.state.arrayAnswer, ans]}))
   };
 
   rowLength = Array(numberOfRows).fill('');
@@ -37,7 +38,22 @@ class Count extends Component {
     this.setState({endTraining: true});
   };
 
+  formatResults = () => {
+    const firstArray = this.state.arrayAnswer.slice(0, numberOfRows/2).flat();
+    const secondArray = this.state.arrayAnswer.slice(numberOfRows/2, numberOfRows).flat();
+    console.log(firstArray, secondArray);
+    const firstResult = firstArray.reduce((a, b = {}) => { console.log(a, b);   return a + b.res}, 0);
+    const secondResult = secondArray.reduce((a, b = {}) => a + b.res, 0);
+    console.log(firstResult, secondResult);
+      // Если значение коэффициента работоспособности приближается к 1,
+      // то это означает, что утомления практически не происходит.
+      // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
+      // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
+    const finalResult = secondResult/firstResult;
+  }
+
   setNext = () => {
+    this.formatResults();
     this.props.submitResult(this.state.answer);
     this.props.history.push('/test/memory-words');
   };

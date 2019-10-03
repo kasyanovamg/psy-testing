@@ -28,6 +28,7 @@
 
 .button-next {
     margin-top: 30px;
+    margin-bottom: 30px;
     align-self: center;
     background: #32a4e9;
     background-image: -webkit-linear-gradient(top, #32a4e9, #1e59b8);
