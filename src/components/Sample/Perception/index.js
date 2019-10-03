@@ -35,6 +35,10 @@ class Perception extends Component {
     }
 
   };
+  abortTest = () => {
+    this.setState({errorCounter: this.state.errorCounter + (this.newLetters.length - this.guessedCells.length)});
+    this.setState({endTraining: true});
+  };
 
   setNext = () => {
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
@@ -45,7 +49,6 @@ class Perception extends Component {
     const {auth} = this.props;
     if (!auth.uid) return <Redirect to='/signin'/>;
     return (
-      <>
         <div className='contents'>
           <p>Корректурная проба</p>
           {!this.state.startTraining &&
@@ -71,12 +74,12 @@ class Perception extends Component {
                   </div>)
               }
             </div>
-            {!this.state.endTraining && <Timer getTime={this.props.time}/>}
+            {!this.state.endTraining && <> <Timer getTime={this.props.time}/> <Button text='Завершить тестирование' onClick={this.abortTest} /> </>}
+
           </React.Fragment>
           }
+          {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
         </div>
-        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
-      </>
     );
   }
 }

@@ -33,17 +33,11 @@ class Timer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  return {
-
-  }
-};
-
 const actions = {
   setTime
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   actions
 )(Timer);
