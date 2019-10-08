@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitShulte} from '../../../actions/generalHelpers'
+import {submitShulte, submitResult} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import Information from './Information'
 import Timer from '../Timer'
@@ -16,7 +16,7 @@ class Shulte extends Component {
     endTraining: false,
   };
 
-  tableLength = 25; //25
+  tableLength = 2; //25
   numbers = Array(this.tableLength).fill().map((e, i) => i + 1).sort(() => Math.random() - 0.5);
   userNumbers = [0];
   cellVerify = (cell) => {
@@ -35,10 +35,17 @@ class Shulte extends Component {
     }
   };
 
+  getFinalScore = () => {
+    return this.props.time + this.state.errorCounter * 10;
+  };
+
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'shulte'});
     this.props.history.push('/test/shulte-red');
   };
+
 
   render() {
     const {auth} = this.props;
@@ -101,7 +108,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitShulte(result))
+    submitResult: (result) => dispatch(submitShulte(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

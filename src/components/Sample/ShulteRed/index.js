@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitShulteRed} from '../../../actions/generalHelpers'
+import {submitResult, submitShulteRed} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import Information from '../Shulte/Information'
 import Timer from '../Timer'
@@ -17,15 +17,14 @@ class ShulteRed extends Component {
     countBackwards: false,
   };
 
-  redLength = 24; //24
-  blackLength = 25; //25
+  redLength = 2; //24
+  blackLength = 3; //25
   red = Array(this.redLength).fill().map((e, i) => i + 1 + 'r');
   black = Array(this.blackLength).fill().map((e, i) => i + 1 + 'b');
   numbers = this.red.concat(this.black).sort(() => Math.random() - 0.5);
   userRed = [`${this.redLength + 1}r`];
   userBlack = ['0b'];
   cellVerify = (cell) => {
-    console.log(cell, this.userRed, this.userBlack);
     this.setState({error: false});
     if (this.state.countBackwards) {
       if (parseInt(this.userRed.slice(-1)[0]) - 1 + "r" === cell) {
@@ -55,8 +54,14 @@ class ShulteRed extends Component {
     }
   };
 
+  getFinalScore = () => {
+    return this.props.time + this.state.errorCounter * 10;
+  };
+
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'shulteRed'});
     this.props.history.push('/test/perception');
   };
 
@@ -114,7 +119,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitShulteRed(result))
+    submitResult: (result) => dispatch(submitShulteRed(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

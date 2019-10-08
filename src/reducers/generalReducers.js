@@ -5,7 +5,8 @@ import {
   SUBMIT_MEMORY_WORDS,
   SUBMIT_PERCEPTION,
   SUBMIT_SHULTE,
-  SUBMIT_SHULTE_RED
+  SUBMIT_SHULTE_RED,
+  SUBMIT_RESULT
 } from '../actions/generalHelpers';
 
 export const perceptionResult = (state = {}, action) => {
@@ -84,6 +85,18 @@ export const memoryImagesResult = (state = {}, action) => {
   }
 };
 
+export const generalResult = (state = {}, action) => {
+  switch (action.type) {
+    case SUBMIT_RESULT:
+      return {
+        ...state,
+        [action.payload.result.name]: action.payload.result.finalScore,
+      };
+    default:
+      return state;
+  }
+};
+
 export default persistCombineReducers(
   {
     key: 'psyTesting',
@@ -96,4 +109,5 @@ export default persistCombineReducers(
     countResult,
     memoryWordsResult,
     memoryImagesResult,
+    generalResult,
   })

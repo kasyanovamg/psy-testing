@@ -44,7 +44,6 @@ class Count extends Component {
     console.log(firstArray, secondArray);
     const firstResult = firstArray.reduce((a, b = {}) => { console.log(a, b);   return a + b.res}, 0);
     const secondResult = secondArray.reduce((a, b = {}) => a + b.res, 0);
-    console.log(firstResult, secondResult);
       // Если значение коэффициента работоспособности приближается к 1,
       // то это означает, что утомления практически не происходит.
       // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
