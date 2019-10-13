@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createProject} from '../../../actions/projectActions';
-import {submitCount} from '../../../actions/generalHelpers';
+import {submitCount, submitResult} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
 import Information from '../Shulte/Information';
 import {Rows} from './Rows';
@@ -21,6 +21,7 @@ class Count extends Component {
     currentRow: 0,
     answer: {},
     arrayAnswer: [],
+    finalScore: 0,
   };
 
   setAnswer = (ans) => {
@@ -49,11 +50,14 @@ class Count extends Component {
       // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
       // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
     const finalResult = secondResult/firstResult;
-  }
+    console.log(finalResult);
+    this.setState({finalScore: finalResult})
+  };
 
   setNext = () => {
     this.formatResults();
     this.props.submitResult(this.state.answer);
+    this.props.submitFinal ({finalScore: this.state.finalScore, name: 'count'});
     this.props.history.push('/test/memory-words');
   };
 
@@ -114,7 +118,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitCount(result))
+    submitResult: (result) => dispatch(submitCount(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Timer from '../Timer';
 import Information from '../Shulte/Information';
 import {createProject} from "../../../actions/projectActions";
-import {submitPerseption} from "../../../actions/generalHelpers";
+import {submitPerseption, submitResult} from "../../../actions/generalHelpers";
 import {connect} from "react-redux";
 import './styles.css';
 import {Button} from "../../Button";
@@ -40,8 +40,14 @@ class Perception extends Component {
     this.setState({endTraining: true});
   };
 
+  getFinalScore = () => {
+    return this.props.time * 10 + this.state.errorCounter;
+  };
+
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'perception'});
     this.props.history.push('/test/count');
   };
 
@@ -95,7 +101,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitPerseption(result))
+    submitResult: (result) => dispatch(submitPerseption(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitMemoryWords} from '../../../actions/generalHelpers'
+import {submitMemoryWords, submitResult} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import './styles.css';
 import TimerReverse from "../TimerReverse";
@@ -34,6 +34,7 @@ class MemoryWords extends Component {
 
   setNext = () => {
     this.props.submitResult(this.state.correct);
+    this.props.submitFinal ({finalScore: this.state.correct, name: 'memoryWords'});
     this.props.history.push('/test/current-summary');
   };
 
@@ -91,7 +92,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitMemoryWords(result))
+    submitResult: (result) => dispatch(submitMemoryWords(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

@@ -55,7 +55,7 @@ class ShulteRed extends Component {
   };
 
   getFinalScore = () => {
-    return this.props.time + this.state.errorCounter * 10;
+    return this.props.time * 10 + this.state.errorCounter;
   };
 
   setNext = () => {
