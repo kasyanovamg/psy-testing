@@ -39,25 +39,20 @@ class Count extends Component {
     this.setState({endTraining: true});
   };
 
-  formatResults = () => {
+
+  setNext = () => {
     const firstArray = this.state.arrayAnswer.slice(0, numberOfRows/2).flat();
     const secondArray = this.state.arrayAnswer.slice(numberOfRows/2, numberOfRows).flat();
     console.log(firstArray, secondArray);
     const firstResult = firstArray.reduce((a, b = {}) => { console.log(a, b);   return a + b.res}, 0);
     const secondResult = secondArray.reduce((a, b = {}) => a + b.res, 0);
-      // Если значение коэффициента работоспособности приближается к 1,
-      // то это означает, что утомления практически не происходит.
-      // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
-      // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
+    // Если значение коэффициента работоспособности приближается к 1,
+    // то это означает, что утомления практически не происходит.
+    // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
+    // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
     const finalResult = secondResult/firstResult;
-    console.log(finalResult);
-    this.setState({finalScore: finalResult})
-  };
-
-  setNext = () => {
-    this.formatResults();
     this.props.submitResult(this.state.answer);
-    this.props.submitFinal ({finalScore: this.state.finalScore, name: 'count'});
+    this.props.submitFinal ({finalScore: finalResult, name: 'count'});
     this.props.history.push('/test/memory-words');
   };
 
