@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {createProject} from "../../actions/projectActions";
 import {connect} from "react-redux";
+import get from 'lodash-es/get';
 import {Button} from "../Button";
 import {Redirect} from "react-router-dom";
+import './styles.css';
 
 class CurrentSummary extends Component {
   state = {
@@ -12,15 +14,33 @@ class CurrentSummary extends Component {
     this.props.createProject(this.props.project);
     this.setState({showSummary: true});
   };
+
   render() {
     const {auth, project} = this.props;
+    const {count, memoryWords, perception, shulte, shulteRed} = get(project, 'generalResult', {});
     if (!auth.uid) return <Redirect to='/signin'/>;
-    return <div>
-      <Button onClick={this.showResults} text='Посмотреть результаты'/>
+    return <div className='summary-container'>
+      <div className='summary-button'>
+        <Button onClick={this.showResults} text='Посмотреть результаты'/>
+      </div>
       {this.state.showSummary &&
       <div>
         Ваши результаты:
-
+        <div>
+          Таблицы шульте: {shulte}
+        </div>
+        <div>
+          Чернокрасные таблицы Шульте: {shulteRed}
+        </div>
+        <div>
+          Корректурная проба: {perception}
+        </div>
+        <div>
+          Счет: {count}
+        </div>
+        <div>
+          Запоминание слов: {memoryWords}
+        </div>
       </div>
       }
     </div>

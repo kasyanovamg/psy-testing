@@ -17,8 +17,8 @@ class ShulteRed extends Component {
     countBackwards: false,
   };
 
-  redLength = 2; //24
-  blackLength = 3; //25
+  redLength = 24; //24
+  blackLength = 25; //25
   red = Array(this.redLength).fill().map((e, i) => i + 1 + 'r');
   black = Array(this.blackLength).fill().map((e, i) => i + 1 + 'b');
   numbers = this.red.concat(this.black).sort(() => Math.random() - 0.5);
@@ -55,7 +55,7 @@ class ShulteRed extends Component {
   };
 
   getFinalScore = () => {
-    return this.props.time * 10 + this.state.errorCounter;
+    return this.props.time * 0.1 + this.state.errorCounter;
   };
 
   setNext = () => {

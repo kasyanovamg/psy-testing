@@ -41,7 +41,7 @@ class Perception extends Component {
   };
 
   getFinalScore = () => {
-    return this.props.time * 10 + this.state.errorCounter;
+    return this.props.time * 0.1 + this.state.errorCounter;
   };
 
   setNext = () => {

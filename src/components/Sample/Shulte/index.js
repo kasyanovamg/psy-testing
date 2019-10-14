@@ -16,7 +16,7 @@ class Shulte extends Component {
     endTraining: false,
   };
 
-  tableLength = 2; //25
+  tableLength = 25; //25
   numbers = Array(this.tableLength).fill().map((e, i) => i + 1).sort(() => Math.random() - 0.5);
   userNumbers = [0];
   cellVerify = (cell) => {
@@ -36,7 +36,7 @@ class Shulte extends Component {
   };
 
   getFinalScore = () => {
-    return this.props.time * 10 + this.state.errorCounter;
+    return this.props.time * 0.1 + this.state.errorCounter;
   };
 
   setNext = () => {

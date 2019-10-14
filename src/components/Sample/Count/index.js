@@ -50,7 +50,7 @@ class Count extends Component {
     // то это означает, что утомления практически не происходит.
     // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
     // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
-    const finalResult = secondResult/firstResult;
+    const finalResult = firstResult > 0 ? secondResult/firstResult : 0;
     this.props.submitResult(this.state.answer);
     this.props.submitFinal ({finalScore: finalResult, name: 'count'});
     this.props.history.push('/test/memory-words');
