@@ -64,7 +64,7 @@ class Count extends Component {
         <p>Тренировка различных аспектов внимания</p>
         {!this.state.startTraining &&
         <div className='message'>
-          <span className='start-message'>{'Складывайте или вычитайте числа'}</span>
+          <span className='start-message'>{'Складывайте или вычитайте числа. Запишите модуль числа.'}</span>
           <Button text='Начать' onClick={() =>
             this.setState({startTraining: true})}/>
         </div>
@@ -76,7 +76,7 @@ class Count extends Component {
             end={this.state.endTraining}
             errors={this.state.errorCounter}
             errorMessage={'Неверное число!'}
-            instructionNote={'Найдите числа!'}
+            instructionNote={'Складывайте или вычитайче числа. Запишите модуль числа.'}
           />
 
           {

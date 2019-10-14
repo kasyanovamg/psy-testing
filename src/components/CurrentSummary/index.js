@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {createProject} from "../../actions/projectActions";
 import {connect} from "react-redux";
-import get from 'lodash-es/get';
-import {Button} from "../Button";
 import {Redirect} from "react-router-dom";
+import get from 'lodash-es/get';
+import {createProject} from "../../actions/projectActions";
+import {Button} from "../Button";
+import {SummaryBlock} from '../SummaryBlock';
 import './styles.css';
 
 class CurrentSummary extends Component {
@@ -26,21 +27,13 @@ class CurrentSummary extends Component {
       {this.state.showSummary &&
       <div>
         Ваши результаты:
-        <div>
-          Таблицы шульте: {shulte}
-        </div>
-        <div>
-          Чернокрасные таблицы Шульте: {shulteRed}
-        </div>
-        <div>
-          Корректурная проба: {perception}
-        </div>
-        <div>
-          Счет: {count}
-        </div>
-        <div>
-          Запоминание слов: {memoryWords}
-        </div>
+        <SummaryBlock
+        count={count}
+        memoryWords={memoryWords}
+        perception={perception}
+        shulte={shulte}
+        shulteRed={shulteRed}
+      />
       </div>
       }
     </div>

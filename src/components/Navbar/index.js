@@ -8,7 +8,7 @@ import "./styles.css";
 
 const useStyles = makeStyles(theme => ({
     navBar: {
-        backgroundColor: '#d8f0de'
+        backgroundColor: '#d8f0de',
     },
     link: {
         textDecoration: "none",

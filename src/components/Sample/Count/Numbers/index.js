@@ -17,11 +17,11 @@ export class Numbers extends Component {
   checkResult = () => {
     const first = parseInt(this.firstNumber);
     const second = parseInt(this.secondNumber);
-    const result = this.sign  ? first + second : first - second;
+    const result = this.sign  ? first + second : Math.abs(first - second);
     //return parseInt(this.state.value) === result ? console.log("yes") : console.log("No")
     this.props.setAnswer({
       index: this.props.elIndex,
-      res: parseInt(this.state.value) === result ? 1 : 0})
+      res: Math.abs(parseInt(this.state.value)) === result ? 1 : 0})
   };
 
   render() {
