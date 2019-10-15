@@ -7,7 +7,12 @@ import './styles.css';
 import TimerReverse from "../TimerReverse";
 import {Button} from "../../Button";
 
-const words = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь'].sort(() => Math.random() - 0.5);
+//(new Set(array)).size !== array.length;  to check for duplicates
+const wordsRaw = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь',
+  'Число', 'Хор', 'Камень', 'Кино', 'Зонт', 'Море', 'Шмель', 'Лампа', 'Рысь',
+  'Кот', 'Ель', 'Дом', 'Зима', 'Мост', 'Брат', 'Очки'];
+
+const words = wordsRaw.sort(() => Math.random() - 0.5).slice(0, 10);
 
 class MemoryWords extends Component {
   state = {
@@ -34,7 +39,7 @@ class MemoryWords extends Component {
 
   setNext = () => {
     this.props.submitResult(this.state.correct);
-    this.props.submitFinal ({finalScore: this.state.correct, name: 'memoryWords'});
+    this.props.submitFinal({finalScore: this.state.correct, name: 'memoryWords'});
     this.props.history.push('/test/current-summary');
   };
 
@@ -64,7 +69,7 @@ class MemoryWords extends Component {
                                                                                   onChange={this.handleChange}
                                                                                   autoComplete="off"
                                                                                   id={i}/></div>)}
-            <Button onClick={this.checkWords} text='Проверить' nameOfClass='next' />
+            <Button onClick={this.checkWords} text='Проверить' nameOfClass='next'/>
           </div>}
 
         </React.Fragment>
