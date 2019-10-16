@@ -41,7 +41,7 @@ export class Rows extends Component {
             />
           ))
         }
-        {rowLength === row ? <Button onClick={this.submitLastRow} text='Готово' nameOfClass='next'/> :
+        {rowLength === row ? <Button onClick={this.submitLastRow} text='Завершить строку' nameOfClass='next'/> :
           <Button  nameOfClass='next' onClick={this.submitRow} text='Следующая строка' />}
         <div className='timer-container'>
           {row === currentRow &&
