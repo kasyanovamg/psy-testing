@@ -22,21 +22,21 @@ class App extends Component {
       <>
         <Navbar />
         <Switch>
-          <Route exact path='/psy-testing' component={Home} />
-          <Route exact path='/signin' component={Signin} />
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/test' component={Test} />
-          <Route exact path='/train' component={Train} />
-          <Route exact path='/profile' component={Summary} />
-          <Route exact path='/summary' component={Summary} />
-          <Route exact path='/test/sample' component={Sample} />
-          <Route exact path='/test/shulte' component={Shulte} />
-          <Route exact path='/test/shulte-red' component={ShulteRed} />
-          <Route exact path='/test/perception' component={Perception} />
-          <Route exact path='/test/count' component={Count} />
-          <Route exact path='/test/memory-words' component={MemoryWords} />
-          <Route exact path='/test/current-summary' component={CurrentSummary} />
-          <Redirect to='/psy-testing' />
+          <Route exact path={process.env.PUBLIC_URL + '/'} component={Home} />
+          <Route exact path={process.env.PUBLIC_URL + '/signin'} component={Signin} />
+          <Route exact path={process.env.PUBLIC_URL + '/signup'} component={Signup} />
+          <Route exact path={process.env.PUBLIC_URL + '/test'} component={Test} />
+          <Route exact path={process.env.PUBLIC_URL + '/train'} component={Train} />
+          <Route exact path={process.env.PUBLIC_URL + '/profile'} component={Summary} />
+          <Route exact path={process.env.PUBLIC_URL + '/summary'} component={Summary} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/sample'} component={Sample} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/shulte'} component={Shulte} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/shulte-red'} component={ShulteRed} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/perception'} component={Perception} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/count'} component={Count} />
+          <Route exact path={process.env.PUBLIC_URL + '/test/memory-words'} component={MemoryWords} />
+          <Route exact path={process.env.PUBLIC_URL +  '/test/current-summary'} component={CurrentSummary} />
+          <Redirect to={process.env.PUBLIC_URL + '/'}  />
         </Switch>
       </>
     );
