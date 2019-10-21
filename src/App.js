@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, HashRouter } from 'react-router-dom';
 import Home from './components/Home';
 import Signin from './components/auth/SignIn';
 import Signup from './components/auth/SignUp';
@@ -19,10 +19,10 @@ import './styles.css';
 class App extends Component {
   render() {
     return (
-      <>
+      <HashRouter basename='/'>
         <Navbar />
         <Switch>
-          <Route exact path='/psy-testing' component={Home} />
+          <Route exact path='/' component={Home} />
           <Route exact path='/signin' component={Signin} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/test' component={Test} />
@@ -36,9 +36,9 @@ class App extends Component {
           <Route exact path='/test/count' component={Count} />
           <Route exact path='/test/memory-words' component={MemoryWords} />
           <Route exact path='/test/current-summary' component={CurrentSummary} />
-          <Redirect to='/psy-testing' />
+          <Redirect to='/' />
         </Switch>
-      </>
+      </HashRouter>
     );
   }
 }
