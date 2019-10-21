@@ -19,7 +19,7 @@ import './styles.css';
 class App extends Component {
   render() {
     return (
-      <HashRouter basename='/'>
+      <>
         <Navbar />
         <Switch>
           <Route exact path='/' component={Home} />
@@ -38,7 +38,7 @@ class App extends Component {
           <Route exact path='/test/current-summary' component={CurrentSummary} />
           <Redirect to='/' />
         </Switch>
-      </HashRouter>
+      </>
     );
   }
 }

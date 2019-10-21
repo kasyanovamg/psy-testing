@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from "redux-devtools-extension";
@@ -28,9 +28,9 @@ store.firebaseAuthIsReady.then(() => {
   rehydrate(
     ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter basename='/'>
           <App/>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>,
       document.getElementById('root')))
 });
