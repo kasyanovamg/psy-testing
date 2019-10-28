@@ -1,18 +1,21 @@
-import React from 'react'
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
+import React from 'react';
+import { createSelector } from "reselect";
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import get from 'lodash-es/get'
-import {SummaryBlock} from "../SummaryBlock";
+import get from 'lodash-es/get';
+import orderBy from 'lodash-es/orderBy';
 import {Charts} from "../Charts";
 
-const getProjects = (state) => get(state, 'firestore.ordered.projects', []);
-
+const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
+const getProjects = createSelector(
+  getAllProjects,
+  (projects) => orderBy(projects, ['createdAt'],['asc'])
+);
 
 const Summary = ({ projects, auth }) => {
   const filteredProjects = projects.filter(project => project.authorId === auth.uid);
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
-console.log(filteredProjects)
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <Charts date={dateArray}
@@ -35,31 +38,16 @@ console.log(filteredProjects)
               results={filteredProjects.map(project => project.generalResult ? project.generalResult.memoryWords || 0 : 0)}
               name='Запоминание слов'
       />
-      {/*{filteredProjects.map(project =>*/}
-      {/*  <div className="card-content grey-text text-darken-3" key={project.id}>*/}
-      {/*    <p className="grey-text">Тест пройден: {project.createdAt && project.createdAt.toDate().toString()}</p>*/}
-      {/*    {project.generalResult &&*/}
-      {/*    <SummaryBlock*/}
-      {/*      count={project.generalResult.count}*/}
-      {/*      memoryWords={project.generalResult.memoryWords}*/}
-      {/*      perception={project.generalResult.perception}*/}
-      {/*      shulte={project.generalResult.shulte}*/}
-      {/*      shulteRed={project.generalResult.shulteRed}*/}
-      {/*    />*/}
-      {/*    }*/}
-      {/*<hr />*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </div>
   )
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     projects: getProjects(state),
     auth: state.firebase.auth
   }
-}
+};
 
 export default compose(
   connect(mapStateToProps),
