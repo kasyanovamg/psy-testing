@@ -14,6 +14,11 @@ const getProjects = createSelector(
 );
 
 const Summary = ({ projects, auth }) => {
+  if (auth.uid === 'UuE6qoYQJAV63WZZHvvbJnTLiKE2') {
+    return (
+      <div>Hello</div>
+    )
+  }
   const filteredProjects = projects.filter(project => project.authorId === auth.uid);
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
   return (
