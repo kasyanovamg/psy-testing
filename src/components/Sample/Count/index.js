@@ -8,8 +8,8 @@ import {Rows} from './Rows';
 import {Button} from "../../Button";
 import './styles.css';
 
-export const lineLength = 23; //23;
-const numberOfRows = 10; //10 - always even number
+export const lineLength = 20; //23;
+const numberOfRows = 8; //10 - always even number
 
 class Count extends Component {
   state = {
@@ -25,7 +25,7 @@ class Count extends Component {
   };
 
   setAnswer = (ans) => {
-    this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}))
+    this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}));
     this.setState(({arrayAnswer: [...this.state.arrayAnswer, ans]}))
   };
 

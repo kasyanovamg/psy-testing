@@ -22,7 +22,7 @@ class CurrentSummary extends Component {
     if (!auth.uid) return <Redirect to='/signin'/>;
     return <div className='summary-container'>
       <div className='summary-button'>
-        <Button onClick={this.showResults} text='Посмотреть результаты'/>
+        {!this.state.showSummary && <Button onClick={this.showResults} text='Посмотреть результаты'/>}
       </div>
       {this.state.showSummary &&
       <div>
