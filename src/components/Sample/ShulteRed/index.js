@@ -65,6 +65,12 @@ class ShulteRed extends Component {
     this.props.history.push('/test/perception');
   };
 
+  abortTest = () => {
+    const currentErrors = this.state.errorCounter + (this.redLength + this.blackLength - this.userRed.length - this.userBlack.length);
+    this.setState({errorCounter: currentErrors});
+    this.setState({endTraining: true});
+  };
+
   render() {
     const {auth} = this.props;
     if (!auth.uid) return <Redirect to='/signin'/>;
@@ -97,7 +103,8 @@ class ShulteRed extends Component {
                      key={e} onClick={() => this.cellVerify(e)}>{parseInt(e)}</div>)
             }
           </div>
-          {!this.state.endTraining && <Timer/>}
+          {!this.state.endTraining && <> <Timer/> <Button text='Завершить тестирование' onClick={this.abortTest} />
+            <div>Все не найденные числа защитаются как ошибки!</div> </>}
         </React.Fragment>
         }
         {this.state.endTraining &&

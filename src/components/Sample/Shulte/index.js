@@ -46,6 +46,11 @@ class Shulte extends Component {
     this.props.history.push('/test/shulte-red');
   };
 
+  abortTest = () => {
+    const currentErrors = this.state.errorCounter + (this.tableLength - this.userNumbers.length);
+    this.setState({errorCounter: currentErrors});
+    this.setState({endTraining: true});
+  };
 
   render() {
     const {auth} = this.props;
@@ -78,20 +83,11 @@ class Shulte extends Component {
                 <div key={e} onClick={() => this.cellVerify(e)} className='cell'>{e}</div>)
             }
           </div>
-          {!this.state.endTraining && <Timer/>}
+          {!this.state.endTraining && <> <Timer/> <Button text='Завершить тестирование' onClick={this.abortTest} />
+          <div>Все не найденные числа защитаются как ошибки!</div> </>}
         </React.Fragment>
         }
-        {this.state.endTraining &&
-         // <button className='next' onClick={() =>
-        //  this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})}>Submit
-        //  </button>
-         // <button className='next' onClick={() =>
-        //  this.props.createProject(this.props.project)
-      // }>Submit Final
-      //    </button>
-
-        <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>
-        }
+        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
       </div>
     )
   }
