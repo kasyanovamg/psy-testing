@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import flattenDeep from 'lodash-es/flattenDeep';
 import {createProject} from '../../../actions/projectActions';
 import {submitCount, submitResult} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
@@ -41,8 +42,8 @@ class Count extends Component {
 
 
   setNext = () => {
-    const firstArray = this.state.arrayAnswer.slice(0, numberOfRows/2).flat();
-    const secondArray = this.state.arrayAnswer.slice(numberOfRows/2, numberOfRows).flat();
+    const firstArray = flattenDeep(this.state.arrayAnswer.slice(0, numberOfRows/2));
+    const secondArray = flattenDeep(this.state.arrayAnswer.slice(numberOfRows/2, numberOfRows));
     console.log(firstArray, secondArray);
     const firstResult = firstArray.reduce((a, b = {}) => { console.log(a, b);   return a + b.res}, 0);
     const secondResult = secondArray.reduce((a, b = {}) => a + b.res, 0);
