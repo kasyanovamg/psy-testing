@@ -25,7 +25,7 @@ export function Charts ({date, results, name = ''})  {
         pointRadius: 1,
         pointHitRadius: 10,
         data: results
-      }
+      },
     ]
   };
   return (
