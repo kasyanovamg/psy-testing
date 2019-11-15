@@ -12,13 +12,13 @@ const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
   getAllProjects,
   (projects) => orderBy(projects, ['createdAt'],['asc'])
-    .filter(project => project.authorId !== 'UuE6qoYQJAV63WZZHvvbJnTLiKE2'),
+    //.filter(project => project.authorId !== 'UuE6qoYQJAV63WZZHvvbJnTLiKE2'),
 );
 
 const countAverage = (arr) => {
   const len = arr.length;
   return sum(arr) / len;
-}
+};
 
 const getAverage = (projects) => {
 
@@ -81,33 +81,41 @@ const getAverage = (projects) => {
 
 const Summary = ({ projects, auth }) => {
   if (auth.uid === 'UuE6qoYQJAV63WZZHvvbJnTLiKE2') {
-    //console.log(projects)
-    const shulteResults = projects.filter(project => project.generalResult.shulte && (project.generalResult.shulte !== 0));
-    const perceptionResults = projects.filter(project => project.generalResult.perception && (project.generalResult.perception !== 0));
-    const memoryResults = projects.filter(project => project.generalResult.memoryWords && (project.generalResult.memoryWords !== 0));
-
-    const dateArr = shulteResults.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
 
     const average = getAverage(projects);
-    console.log(average);
-
-    return <div>
-      <Charts date={dateArr}
-              results={shulteResults.map(project => project.generalResult ? project.generalResult.shulte || 0 : 0)}
-              name='Таблицы Шульте'
-      />
-      <Charts date={dateArr}
-              results={perceptionResults.map(project => project.generalResult ? project.generalResult.perception || 0 : 0)}
-              name='Корректурные пробы'
-      />
-      <Charts date={dateArr}
-              results={memoryResults.map(project => project.generalResult ? project.generalResult.memoryWords || 0 : 0)}
-              name='Запоминание слов'
-      />
-    </div>
+    const trial = Object.keys(average).map(key => parseInt(key) + 1); //start with 1
+    return (
+      <div className="card z-depth-0 project-summary summary-container">
+        <h1>Усредненные результаты всех испытуемых</h1>
+        <Charts date={trial}
+                results={Object.values(average).map(project => project.shulte || 0)}
+                name='Таблицы Шульте'
+        />
+        Снижение показателя говорит об увеличении концентрации внимания
+        <Charts date={trial}
+                results={Object.values(average).map(project => project.shulteRed || 0)}
+                name='Черно-Красные Таблицы Шульте'
+        />
+        Снижение показателя говорит об улучшении переключаемости внимания
+        <Charts date={trial}
+                results={Object.values(average).map(project => project.perception || 0)}
+                name='Корректурные пробы'
+        />
+        Снижение показателя говорит об улучшении устойчивости внимания
+        <Charts date={trial}
+                results={Object.values(average).map(project => project.count || 0)}
+                name='Счет'
+        />
+        Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости
+        <Charts date={trial}
+                results={Object.values(average).map(project => project.memoryWords || 0)}
+                name='Запоминание слов'
+        />
+        Увеличение показателя говорит об улучшении памяти
+      </div>
+    )
   }
   const filteredProjects = projects.filter(project => project.authorId === auth.uid);
-  console.log(filteredProjects)
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
   return (
     <div className="card z-depth-0 project-summary summary-container">
