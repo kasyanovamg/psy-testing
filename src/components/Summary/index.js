@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import get from 'lodash-es/get';
 import orderBy from 'lodash-es/orderBy';
+import sum from 'lodash-es/sum';
 import {Charts} from "../Charts";
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
@@ -13,6 +14,11 @@ const getProjects = createSelector(
   (projects) => orderBy(projects, ['createdAt'],['asc'])
     .filter(project => project.authorId !== 'UuE6qoYQJAV63WZZHvvbJnTLiKE2'),
 );
+
+const countAverage = (arr) => {
+  const len = arr.length;
+  return sum(arr) / len;
+}
 
 const getAverage = (projects) => {
 
@@ -37,16 +43,36 @@ const getAverage = (projects) => {
       results[i] = {
         shulte: [],
         shulteRed: [],
-        count: []
+        perception: [],
+        count: [],
+        memoryWords: []
       };
       project.forEach(p => {
         if (p.generalResult) {
           if (p.generalResult.shulte > 0) {
             results[i].shulte.push(p.generalResult.shulte)
           }
+          if (p.generalResult.shulteRed > 0) {
+            results[i].shulteRed.push(p.generalResult.shulteRed)
+          }
+          if (p.generalResult.perception > 0) {
+            results[i].perception.push(p.generalResult.perception)
+          }
+          if (p.generalResult.count > 0) {
+            results[i].count.push(p.generalResult.count)
+          }
+          if (p.generalResult.memoryWords > 0) {
+            results[i].memoryWords.push(p.generalResult.memoryWords)
+          }
         }
 
-      })
+      });
+      results[i].shulte = countAverage(results[i].shulte);
+      results[i].shulteRed = countAverage(results[i].shulteRed);
+      results[i].perception = countAverage(results[i].perception);
+      results[i].count = countAverage(results[i].count);
+      results[i].memoryWords = countAverage(results[i].memoryWords);
+
     });
 
   return results;
