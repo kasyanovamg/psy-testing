@@ -47,16 +47,14 @@ const Summary = ({ projects, auth }) => {
   )
 };
 
-const mapStateToProps = (state) => {
-  return {
-    projects: getProjects(state),
-    auth: state.firebase.auth
-  }
-};
-
 export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([
-    { collection: 'projects' }
-  ])
-)(Summary)
+  connect((state) => ({
+    projects: getProjects(state),
+    auth: state.firebase.auth,
+  })),
+  firestoreConnect(props => {
+    return [
+      { collection: 'projects', where: [['authorId', '==', props.auth.uid]] }
+    ]
+  })
+)(Summary);
