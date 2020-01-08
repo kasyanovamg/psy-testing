@@ -1,13 +1,15 @@
 import {persistCombineReducers} from 'redux-persist';
+import get from 'lodash-es/get';
 import storageSession from 'redux-persist/lib/storage/session';
 import {
-  SUBMIT_COUNT, SUBMIT_MEMORY_IMAGES,
+  SUBMIT_COUNT,
   SUBMIT_MEMORY_WORDS,
   SUBMIT_PERCEPTION,
   SUBMIT_SHULTE,
   SUBMIT_SHULTE_RED,
-  SUBMIT_RESULT
+  SUBMIT_RESULT, SET_GROUP,
 } from '../actions/generalHelpers';
+import {firebaseReducer} from "react-redux-firebase";
 
 export const perceptionResult = (state = {}, action) => {
   switch (action.type) {
@@ -72,19 +74,6 @@ export const memoryWordsResult = (state = {}, action) => {
   }
 };
 
-export const memoryImagesResult = (state = {}, action) => {
-  switch (action.type) {
-    case SUBMIT_MEMORY_IMAGES:
-      return {
-        ...state,
-        time: action.payload.result.time,
-        errors: action.payload.result.errors
-      };
-    default:
-      return state;
-  }
-};
-
 export const generalResult = (state = {}, action) => {
   switch (action.type) {
     case SUBMIT_RESULT:
@@ -97,6 +86,17 @@ export const generalResult = (state = {}, action) => {
   }
 };
 
+
+export const group = (state = '', action) => {
+  switch (action.type) {
+    case SET_GROUP:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
 export default persistCombineReducers(
   {
     key: 'psyTesting',
@@ -108,6 +108,6 @@ export default persistCombineReducers(
     shulteRedResult,
     countResult,
     memoryWordsResult,
-    memoryImagesResult,
+    group,
     generalResult,
   })

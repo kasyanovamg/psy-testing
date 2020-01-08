@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import get from 'lodash-es/get';
 import orderBy from 'lodash-es/orderBy';
 import {Charts} from "../Charts";
-import { SummaryAdmin } from '../AdminSummary';
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
@@ -14,11 +13,12 @@ const getProjects = createSelector(
   (projects) => orderBy(projects, ['createdAt'],['asc'])
 );
 
-const SummaryNonAdmin = ({ projects, auth }) => {
-  const filteredProjects = projects.filter(project => project.authorId === auth.uid);
+const SummaryAdminView = ({ projects, auth }) => {
+  const filteredProjects = projects; //.filter(project => project.authorId === auth.uid);
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
   return (
     <div className="card z-depth-0 project-summary summary-container">
+      <h3>Admin</h3>
       <Charts date={dateArray}
               results={filteredProjects.map(project => project.generalResult ? project.generalResult.shulte || 0 : 0)}
               name='Таблицы Шульте'
@@ -48,25 +48,14 @@ const SummaryNonAdmin = ({ projects, auth }) => {
   )
 };
 
-const SummaryNonAdminContainer = compose(
+export const SummaryAdmin = compose(
   connect((state) => ({
     projects: getProjects(state),
     auth: state.firebase.auth,
   })),
   firestoreConnect(props => {
     return [
-      { collection: 'projects', where: [['authorId', '==', props.auth.uid]] }
+      { collection: 'projects' }
     ]
   })
-)(SummaryNonAdmin);
-
-export const Summary =
-  connect((state) => ({
-    auth: state.firebase.auth,
-  })
-)(({auth}) => {
-if (auth.uid === "UuE6qoYQJAV63WZZHvvbJnTLiKE2") {
-  return <SummaryAdmin />
-}
-return <SummaryNonAdminContainer/>
-});
+)(SummaryAdminView);
