@@ -5,6 +5,7 @@ export const SUBMIT_COUNT = "general/SUBMIT_COUNT";
 export const SUBMIT_MEMORY_WORDS = "general/SUBMIT_MEMORY_WORDS";
 export const SUBMIT_RESULT = "general/SUBMIT_RESULT";
 export const SET_GROUP = "general/SET_GROUP";
+export const SET_ATTEMPT ="general/SET_ATTEMPT";
 
 export const submitPerseption = (result = {}) => ({
   type: SUBMIT_PERCEPTION,
@@ -39,4 +40,9 @@ export const submitResult = (result = {}) => ({
 export const setGroup = (group = '') => ({
   type: SET_GROUP,
   payload: group
+});
+
+export const setAttempt = (attempt = 0) => ({
+  type: SET_ATTEMPT,
+  payload: attempt
 });

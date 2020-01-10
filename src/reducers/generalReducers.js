@@ -1,5 +1,4 @@
 import {persistCombineReducers} from 'redux-persist';
-import get from 'lodash-es/get';
 import storageSession from 'redux-persist/lib/storage/session';
 import {
   SUBMIT_COUNT,
@@ -7,9 +6,10 @@ import {
   SUBMIT_PERCEPTION,
   SUBMIT_SHULTE,
   SUBMIT_SHULTE_RED,
-  SUBMIT_RESULT, SET_GROUP,
+  SUBMIT_RESULT,
+  SET_GROUP,
+  SET_ATTEMPT,
 } from '../actions/generalHelpers';
-import {firebaseReducer} from "react-redux-firebase";
 
 export const perceptionResult = (state = {}, action) => {
   switch (action.type) {
@@ -97,6 +97,16 @@ export const group = (state = '', action) => {
 };
 
 
+export const attempt = (state = 0, action) => {
+  switch (action.type) {
+    case SET_ATTEMPT:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
 export default persistCombineReducers(
   {
     key: 'psyTesting',
@@ -109,5 +119,6 @@ export default persistCombineReducers(
     countResult,
     memoryWordsResult,
     group,
+    attempt,
     generalResult,
   })
