@@ -7,6 +7,7 @@ import './styles.css';
 import TimerReverse from "../TimerReverse";
 import {Button} from "../../Button";
 
+const maxTime = 30;
 //(new Set(array)).size !== array.length;  to check for duplicates
 const wordsRaw = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь',
   'Число', 'Хор', 'Камень', 'Кино', 'Зонт', 'Море', 'Шмель', 'Лампа', 'Рысь',
@@ -50,18 +51,21 @@ class MemoryWords extends Component {
       <div className='contents'>
         <p>Тренировка памяти</p>
         {!this.state.startTraining &&
-        <div className='message'>
-          <span className='start-message'>{'Запомните следующие слова'}</span>
-          <button className='start-btn' onClick={() =>
-            this.setState({startTraining: true})}>
-            Начать
-          </button>
-        </div>
+        <>
+          <div className='message'>
+            <span className='start-message'>{'Запомните следующие слова'}</span>
+            <button className='start-btn' onClick={() =>
+              this.setState({startTraining: true})}>
+              Начать
+            </button>
+          </div>
+          <p>На запоминание всех слов будет дано {maxTime} секунд.</p>
+        </>
         }
         {this.state.startTraining &&
         <React.Fragment>
 
-          {this.state.showWords && <TimerReverse maxTime={30} passedFunction={this.endMemorizing}/>}
+          {this.state.showWords && <TimerReverse maxTime={maxTime} passedFunction={this.endMemorizing}/>}
 
           {this.state.showWords && <div className='words'>{words.join(', ')}</div>}
           {!this.state.showWords && <div>

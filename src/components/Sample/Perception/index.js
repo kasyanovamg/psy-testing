@@ -57,6 +57,9 @@ class Perception extends Component {
     return (
         <div className='contents'>
           <p>Корректурная проба</p>
+          <p>
+            Среди множества букв "{this.letter}" найдите все буквы "{this.searchedLetter}".
+          </p>
           {!this.state.startTraining &&
           <div className='message'>
             <span className='start-message'>{`Найдите все буквы "${this.searchedLetter}"`}</span>

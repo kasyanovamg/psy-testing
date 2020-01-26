@@ -58,6 +58,9 @@ class Shulte extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p>
+          Кликайте на цифры по очереди от 1 до 25-ти. Задание выполняется на время.
+        </p>
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, makeStyles, Button, Card, Grid, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import { signIn } from "../../../actions/authActions";
 
 const useStyles = makeStyles(theme => ({
@@ -79,6 +79,8 @@ const SignIn = (props) => {
           {authError && <p>{authError}</p>}
         </Grid>
       </form>
+      <br/>
+      <p>Нет аккаунта? <NavLink to='/signup' className={props.className}>Зарегистрируйся</NavLink></p>
     </Card>
   );
 };

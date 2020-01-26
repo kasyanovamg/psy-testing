@@ -26,7 +26,8 @@ class CurrentSummary extends Component {
       </div>
       {this.state.showSummary &&
       <div>
-        Ваши результаты:
+        <h3>Ваши результаты:</h3>
+        <br/>
         <SummaryBlock
         count={count}
         memoryWords={memoryWords}
@@ -34,6 +35,9 @@ class CurrentSummary extends Component {
         shulte={shulte}
         shulteRed={shulteRed}
       />
+      <br/>
+      <br/>
+      <p>График по всем результатам можно посмотреть в личном кабинете в профиле.</p>
       </div>
       }
     </div>

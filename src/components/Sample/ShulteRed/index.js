@@ -77,6 +77,9 @@ class ShulteRed extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p>
+          Кликайте на красные и черные цифры цифры по-переменно: черные - в порядке возрастания, красные в порядке убывания.
+        </p>
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Начните поиск цифр: 1 черный - 24 красный; 2 черный - 23 красный... '}</span>

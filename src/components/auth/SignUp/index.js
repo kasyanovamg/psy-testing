@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   Radio
 } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../../actions/authActions";
 
@@ -144,6 +144,8 @@ const Signup = props => {
           {authError && <p>{authError}</p>}
         </Grid>
       </form>
+      <br/>
+      <p>Уже есть аккаунт? <NavLink to='/signin' className={props.className}>Войти</NavLink></p>
     </Card>
   );
 };

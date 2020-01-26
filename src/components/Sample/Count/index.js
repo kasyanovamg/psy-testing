@@ -63,6 +63,9 @@ class Count extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p className='container'>Вам будет дано {numberOfRows} радов чилел. Нужно складывать или вычитать числа и записывать в поле ввода
+          (для отрицательных чисел не обязательно ставить знак минуса). На подсчет каждого ряда дается 30 секунд.
+          По истечении этого времени ряд будет блокироваться.</p>
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Складывайте или вычитайте числа. Запишите модуль числа.'}</span>
