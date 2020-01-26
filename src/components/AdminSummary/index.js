@@ -12,13 +12,28 @@ const getProjects = createSelector(
   getAllProjects,
   (projects) => orderBy(projects, ['createdAt'],['asc'])
 );
+const getAuthors = createSelector(
+  getAllProjects,
+  (projects) => {
+    const authors = new Set(projects.map(p => p.authorId));
+    return [...authors].concat('all');
+  }
+);
 
-const SummaryAdminView = ({ projects, auth }) => {
-  const filteredProjects = projects; //.filter(project => project.authorId === auth.uid);
+const SummaryAdminView = ({ projects, auth, authors }) => {
+  const [selectedAuth, setAuth] = React.useState('all');
+  const onChangeAuth = React.useCallback((e) => setAuth(e.target.value), []);
+  const filteredProjects = projects.filter(project => project.authorId === selectedAuth || selectedAuth === 'all');
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
+  console.log(filteredProjects);
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
+      <p>Выбрать пользователя: </p>
+      <select onChange={onChangeAuth} value={selectedAuth}>{authors.map(author =>
+        <option value={author} selected={author===selectedAuth}>{author}</option>
+      )}</select>
+
       <Charts date={dateArray}
               results={filteredProjects.map(project => project.generalResult ? project.generalResult.shulte || 0 : 0)}
               name='Таблицы Шульте'
@@ -52,6 +67,7 @@ export const SummaryAdmin = compose(
   connect((state) => ({
     projects: getProjects(state),
     auth: state.firebase.auth,
+    authors: getAuthors(state),
   })),
   firestoreConnect(props => {
     return [
