@@ -19,16 +19,31 @@ const getAuthors = createSelector(
     return [...authors].concat('all');
   }
 );
+const getGroups = createSelector(
+  getAllProjects,
+  (projects) => {
+    const group = new Set(projects.map(p => p.group));
+    return [...group].concat('all')
+  }
+);
 
-const SummaryAdminView = ({ projects, auth, authors }) => {
+const SummaryAdminView = ({ projects, auth, authors, groups }) => {
   const [selectedAuth, setAuth] = React.useState('all');
   const onChangeAuth = React.useCallback((e) => setAuth(e.target.value), []);
-  const filteredProjects = projects.filter(project => project.authorId === selectedAuth || selectedAuth === 'all');
+  const [selectedGroup, setGroup] = React.useState('all');
+  const onChangeGroup = React.useCallback((e) => setGroup(e.target.value), []);
+  const filteredProjects = projects.filter(project => (project.authorId === selectedAuth || selectedAuth === 'all') &&
+  (project.group === selectedGroup || selectedGroup === 'all')
+  );
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
   console.log(filteredProjects);
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
+      <p>Выбрать группу: </p>
+      <select onChange={onChangeGroup} value={selectedGroup}>{groups.map(group =>
+        <option value={group} selected={group===selectedGroup}>{group}</option>
+      )}</select>
       <p>Выбрать пользователя: </p>
       <select onChange={onChangeAuth} value={selectedAuth}>{authors.map(author =>
         <option value={author} selected={author===selectedAuth}>{author}</option>
@@ -68,6 +83,7 @@ export const SummaryAdmin = compose(
     projects: getProjects(state),
     auth: state.firebase.auth,
     authors: getAuthors(state),
+    groups: getGroups(state),
   })),
   firestoreConnect(props => {
     return [
