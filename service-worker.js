@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/psy-testing/precache-manifest.856fd74cfc6c737bc89499cf36bfa2b3.js"
+  "/psy-testing/precache-manifest.438b4eb777a9704baf459b84602d797e.js"
 );
 
 workbox.clientsClaim();
