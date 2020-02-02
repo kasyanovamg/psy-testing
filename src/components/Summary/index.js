@@ -7,6 +7,7 @@ import get from 'lodash-es/get';
 import orderBy from 'lodash-es/orderBy';
 import {Charts} from "../Charts";
 import { SummaryAdmin } from '../AdminSummary';
+import {Redirect} from "react-router-dom";
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
@@ -17,6 +18,7 @@ const getProjects = createSelector(
 const SummaryNonAdmin = ({ projects, auth }) => {
   const filteredProjects = projects.filter(project => project.authorId === auth.uid);
   const dateArray = filteredProjects.map(project => project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 0);
+  if (!auth.uid) return <Redirect to='/signin'/>;
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <Charts date={dateArray}
@@ -54,9 +56,9 @@ const SummaryNonAdminContainer = compose(
     auth: state.firebase.auth,
   })),
   firestoreConnect(props => {
-    return [
+    return props.auth.uid ? [
       { collection: 'projects', where: [['authorId', '==', props.auth.uid]] }
-    ]
+    ] : [];
   })
 )(SummaryNonAdmin);
 

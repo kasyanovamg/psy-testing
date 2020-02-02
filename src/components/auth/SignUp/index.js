@@ -40,7 +40,7 @@ const Signup = props => {
     password: "",
     firstName: "",
     lastName: "",
-    group: "experimental"
+    group: "control"
   });
 
   const handleChange = e => {
