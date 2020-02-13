@@ -1,18 +1,19 @@
 import React from 'react';
 import get from 'lodash-es/get';
 import max from 'lodash-es/max';
-import { createSelector } from "reselect";
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import {createSelector} from "reselect";
+import {firestoreConnect} from 'react-redux-firebase';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import orderBy from 'lodash-es/orderBy';
-import { AdminCharts } from "../AdminCharts";
+import {AdminCharts} from "../AdminCharts";
 import {Redirect} from "react-router-dom";
+import {setTrackGroup} from "../../actions/otherActions";
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
   getAllProjects,
-  (projects) => orderBy(projects, ['createdAt'],['asc'])
+  (projects) => orderBy(projects, ['createdAt'], ['asc'])
 );
 const getGroups = createSelector(
   getAllProjects,
@@ -24,18 +25,30 @@ const getGroups = createSelector(
 const getFilteredAuthors = (projects) => {
   const authors = new Set(projects.map(p => p.authorId));
   return [...authors].concat('all');
-}
-const SummaryAdminView = ({projects, auth, groups}) => {
+};
+
+
+const getSelectedGroup = (state) => get(state, 'utils.group', 'all');
+
+const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => {
   const [selectedAuth, setAuth] = React.useState('all');
-  const onChangeAuth = React.useCallback((e) => setAuth(e.target.value), [selectedAuth]);
-  const [selectedGroup, setGroup] = React.useState('all');
-  const onChangeGroup = React.useCallback((e) => setGroup(e.target.value), [selectedGroup]);
+  const onChangeAuth = React.useCallback((e) => {
+    setAuth(e.target.value);
+    setGroup('all');
+  }, [selectedAuth, selectedGroup]);
+  const onChangeGroup = React.useCallback((e) => {
+    setGroup(e.target.value);
+    setAuth('all');
+  }, [selectedGroup, selectedAuth]);
+
   const filteredProjects = React.useMemo(() => projects.filter(project => (project.authorId === selectedAuth || selectedAuth === 'all') &&
     (project.group === selectedGroup || selectedGroup === 'all')
-  ),[selectedAuth, selectedGroup]);
-  const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup]);
-  const dateArray = Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1);
+  ), [selectedAuth, selectedGroup, projects]);
+  const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup, projects]);
+  const dateArray = React.useMemo(() =>
+    Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1), [projects, selectedAuth]);
   if (!auth.uid) return <Redirect to='/signin'/>;
+
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
@@ -94,16 +107,23 @@ const SummaryAdminView = ({projects, auth, groups}) => {
     </div>
   )
 };
-
+const mapDispatchToProps = dispatch => {
+  return {
+    setGroup: (group) => dispatch(setTrackGroup(group)),
+  }
+}
 export const SummaryAdmin = compose(
   connect((state) => ({
-    projects: getProjects(state),
-    auth: state.firebase.auth,
-    groups: getGroups(state),
-  })),
+      projects: getProjects(state),
+      auth: state.firebase.auth,
+      groups: getGroups(state),
+      selectedGroup: getSelectedGroup(state),
+    }),
+    mapDispatchToProps,
+    ),
   firestoreConnect(props => {
     return [
-      { collection: 'projects' }
+      {collection: 'projects'}
     ]
   })
 )(SummaryAdminView);

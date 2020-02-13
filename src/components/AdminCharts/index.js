@@ -24,7 +24,6 @@ export function AdminCharts({date, results, name = ''}) {
     return newObj[r.id] ? newObj[r.id] = newObj[r.id].concat(r.result) : newObj[r.id] = [r.result];
   });
 
-  console.log('newObj', newObj);
   const dataset = Object.keys(newObj).map(obj => {
     const color = random_rgba();
     return {
