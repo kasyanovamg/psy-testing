@@ -13,12 +13,16 @@ import {setTrackGroup} from "../../actions/otherActions";
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
   getAllProjects,
-  (projects) => orderBy(projects, ['createdAt'], ['asc'])
+  (projects) => {
+    const allProjects = projects.filter(p => p.group !== 'test');
+    return orderBy(allProjects, ['createdAt'], ['asc'])
+  }
 );
 const getGroups = createSelector(
   getAllProjects,
   (projects) => {
-    const group = new Set(projects.map(p => p.group));
+    const allProjects = projects.filter(p => p.group !== 'test');
+    const group = new Set(allProjects.map(p => p.group));
     return [...group].concat('all')
   }
 );
@@ -48,7 +52,7 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
   const dateArray = React.useMemo(() =>
     Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1), [projects, selectedAuth]);
   if (!auth.uid) return <Redirect to='/signin'/>;
-
+console.log(111111, filteredProjects.filter(au  => !au.group));
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>

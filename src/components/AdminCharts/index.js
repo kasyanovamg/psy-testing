@@ -12,10 +12,14 @@ function getNormalizedContent(contentSettingsMapping) {
 }
 
 function random_rgba() {
-  var o = Math.round, r = Math.random, s = 255;
+  const o = Math.round, r = Math.random, s = 255;
   return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 }
-
+function getColor(){
+  return "hsl(" + 360 * Math.random() + ',' +
+    (25 + 70 * Math.random()) + '%,' +
+    (50 + 10 * Math.random()) + '%)'
+}
 export function AdminCharts({date, results, name = ''}) {
 //normalize to make id the key and array with {result, attempt} or array of result for each user
   // const res = results.map()
@@ -25,23 +29,23 @@ export function AdminCharts({date, results, name = ''}) {
   });
 
   const dataset = Object.keys(newObj).map(obj => {
-    const color = random_rgba();
+    const color = getColor();
     return {
     label: obj,
     fill: false,
     lineTension: 0.1,
-    backgroundColor: 'rgba(75,192,192,0.4)',
+    backgroundColor: color,
     borderColor: color,
     borderCapStyle: 'butt',
     borderDash: [],
     borderDashOffset: 0.0,
     borderJoinStyle: 'miter',
-    pointBorderColor: 'rgba(75,192,192,1)',
+    pointBorderColor: color,
     pointBackgroundColor: '#fff',
     pointBorderWidth: 1,
     pointHoverRadius: 5,
     pointHoverBackgroundColor: color,
-    pointHoverBorderColor: 'rgba(220,220,220,1)',
+    pointHoverBorderColor: color,
     pointHoverBorderWidth: 2,
     pointRadius: 1,
     pointHitRadius: 10,
