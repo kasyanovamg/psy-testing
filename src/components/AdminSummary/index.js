@@ -36,6 +36,11 @@ const getSelectedGroup = (state) => get(state, 'utils.group', 'all');
 
 const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => {
   const [selectedAuth, setAuth] = React.useState('all');
+  const [checked, toggleCheck] = React.useState(false);
+  //todo: make the function to calculate average results
+  if (!auth.uid) return <Redirect to='/signin'/>;
+
+  const onToggleCheck = React.useCallback(() => toggleCheck(!checked), [checked, projects]);
   const onChangeAuth = React.useCallback((e) => {
     setAuth(e.target.value);
     setGroup('all');
@@ -51,8 +56,7 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
   const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup, projects]);
   const dateArray = React.useMemo(() =>
     Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1), [projects, selectedAuth]);
-  if (!auth.uid) return <Redirect to='/signin'/>;
-console.log(111111, filteredProjects.filter(au  => !au.group));
+
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
@@ -60,6 +64,8 @@ console.log(111111, filteredProjects.filter(au  => !au.group));
       <select onChange={onChangeGroup} value={selectedGroup}>{groups.map(group =>
         <option value={group} selected={group === selectedGroup}>{group}</option>
       )}</select>
+      <span>    Показывать средние результаты <input type="checkbox" checked={checked}
+                                                     onChange={onToggleCheck}/> </span>
       <p>Выбрать пользователя: </p>
       {/*check that users with same last name have their data under one account*/}
       <select onChange={onChangeAuth} value={selectedAuth}>{filteredAuthors.map(author =>
@@ -124,7 +130,7 @@ export const SummaryAdmin = compose(
       selectedGroup: getSelectedGroup(state),
     }),
     mapDispatchToProps,
-    ),
+  ),
   firestoreConnect(props => {
     return [
       {collection: 'projects'}
