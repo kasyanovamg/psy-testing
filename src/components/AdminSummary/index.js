@@ -9,13 +9,14 @@ import orderBy from 'lodash-es/orderBy';
 import {AdminCharts} from "../AdminCharts";
 import {Redirect} from "react-router-dom";
 import {setTrackGroup} from "../../actions/otherActions";
+import { getAverage } from "./utils";
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
   getAllProjects,
   (projects) => {
     const allProjects = projects.filter(p => p.group !== 'test');
-    return orderBy(allProjects, ['createdAt'], ['asc'])
+    return orderBy(allProjects, ['attempt'], ['asc'])
   }
 );
 const getGroups = createSelector(
@@ -50,13 +51,21 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
     setAuth('all');
   }, [selectedGroup, selectedAuth]);
 
-  const filteredProjects = React.useMemo(() => projects.filter(project => (project.authorId === selectedAuth || selectedAuth === 'all') &&
-    (project.group === selectedGroup || selectedGroup === 'all')
-  ), [selectedAuth, selectedGroup, projects]);
+  const filteredProjects = React.useMemo(() => {
+    if (!checked) {
+      return projects.filter(project => (project.authorId === selectedAuth || selectedAuth === 'all') &&
+        (project.group === selectedGroup || selectedGroup === 'all')
+      )
+    } else {
+      return getAverage(projects.filter(project => project.group === 'experimental'
+      ), 'experimental').concat(getAverage(projects.filter(project => project.group === 'control'
+      ), 'control'));
+    }
+  }, [selectedAuth, selectedGroup, projects, checked]);
   const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup, projects]);
   const dateArray = React.useMemo(() =>
     Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1), [projects, selectedAuth]);
-
+  console.log(selectedAuth);
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
