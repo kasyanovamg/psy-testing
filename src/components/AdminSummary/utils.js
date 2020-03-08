@@ -58,7 +58,7 @@ export const getAverage = (projects, group) => {
       results[i].perception = countAverage(results[i].perception);
       results[i].count = countAverage(results[i].count);
       results[i].memoryWords = countAverage(results[i].memoryWords);
-      finalResults.push({generalResult: results[i], authorId: group})
+      finalResults.push({generalResult: results[i], authorId: group});
     });
 
   return finalResults;

@@ -7,6 +7,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import orderBy from 'lodash-es/orderBy';
 import {AdminCharts} from "../AdminCharts";
+import {Friedman} from "./Statistics/Friedman";
 import {Redirect} from "react-router-dom";
 import {setTrackGroup} from "../../actions/otherActions";
 import { getAverage } from "./utils";
@@ -87,6 +88,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Таблицы Шульте'
       />
       Снижение показателя говорит об увеличении концентрации внимания
+<Friedman results={filteredProjects.map(project => project.generalResult ?
+  {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)} />
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
                      result: project.generalResult.shulteRed,
