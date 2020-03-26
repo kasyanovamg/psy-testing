@@ -88,8 +88,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Таблицы Шульте'
       />
       Снижение показателя говорит об увеличении концентрации внимания
-<Friedman results={filteredProjects.map(project => project.generalResult ?
-  {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)} />
+      <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
                      result: project.generalResult.shulteRed,
@@ -99,6 +99,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Черно-Красные Таблицы Шульте'
       />
       Снижение показателя говорит об улучшении переключаемости внимания
+      <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.shulteRed, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
                      result: project.generalResult.perception,
@@ -108,6 +110,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Корректурные пробы'
       />
       Снижение показателя говорит об улучшении устойчивости внимания
+      <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.perception, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
                      result: project.generalResult.count,
@@ -117,6 +121,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Счет'
       />
       Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости
+      <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.count, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
                      result: project.generalResult.memoryWords,
@@ -126,6 +132,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Запоминание слов'
       />
       Увеличение показателя говорит об улучшении памяти
+      <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.memoryWords, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
     </div>
   )
 };
