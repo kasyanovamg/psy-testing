@@ -60,7 +60,7 @@ export function AdminCharts({date, results, name = ''}) {
   return (
     <div>
       <h2>{name}</h2>
-      <Line data={data}/>
+      <Line data={data} />
     </div>
   );
 }
