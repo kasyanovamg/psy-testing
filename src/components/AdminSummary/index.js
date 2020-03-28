@@ -8,7 +8,8 @@ import {connect} from 'react-redux';
 import orderBy from 'lodash-es/orderBy';
 import {AdminCharts} from "../AdminCharts";
 import {Friedman} from "./Statistics/Friedman";
-import {LeastSquares} from "./Statistics/LeastSquares"
+import {LeastSquares} from "./Statistics/LeastSquares";
+import {MannUitney} from "./Statistics/MannUitney";
 import {Redirect} from "react-router-dom";
 import {setTrackGroup} from "../../actions/otherActions";
 import {getAverage} from "./utils";
@@ -53,15 +54,16 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
     setAuth('all');
   }, [selectedGroup, selectedAuth]);
 
+  const ctrlGrp = projects.filter(project => project.group === 'control');
+  const expGrp = projects.filter(project => project.group === 'experimental');
+
   const filteredProjects = React.useMemo(() => {
     if (!checked) {
       return projects.filter(project => (project.authorId === selectedAuth || selectedAuth === 'all') &&
         (project.group === selectedGroup || selectedGroup === 'all')
       )
     } else {
-      return getAverage(projects.filter(project => project.group === 'experimental'
-      ), 'experimental').concat(getAverage(projects.filter(project => project.group === 'control'
-      ), 'control'));
+      return getAverage(expGrp, 'experimental').concat(getAverage(ctrlGrp, 'control'));
     }
   }, [selectedAuth, selectedGroup, projects, checked]);
   const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup, projects]);
@@ -89,13 +91,19 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Таблицы Шульте'
       />
       Снижение показателя говорит об увеличении концентрации внимания
-      <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
       <LeastSquares
         date={dateArray}
         name='Таблицы Шульте - тренд'
         results={filteredProjects.map(project => project.generalResult ?
           {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      <MannUitney date={dateArray}
+                  ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                    {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}
+                  expResults={expGrp.map(project => project.generalResult ?
+                    {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}
+      />
 
       <AdminCharts date={dateArray}
                    results={filteredProjects.map(project => project.generalResult ? {
@@ -106,8 +114,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Черно-Красные Таблицы Шульте'
       />
       Снижение показателя говорит об улучшении переключаемости внимания
-      <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.shulteRed, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.shulteRed, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
       <LeastSquares
         date={dateArray}
         name='Черно-Красные Таблицы Шульте - тренд'
@@ -123,8 +131,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Корректурные пробы'
       />
       Снижение показателя говорит об улучшении устойчивости внимания
-      <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.perception, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.perception, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
 
       <LeastSquares
         date={dateArray}
@@ -141,8 +149,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Счет'
       />
       Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости
-      <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.count, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.count, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
 
       <LeastSquares
         date={dateArray}
@@ -159,8 +167,8 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                    name='Запоминание слов'
       />
       Увеличение показателя говорит об улучшении памяти
-      <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.memoryWords, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
+      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
+        {result: project.generalResult.memoryWords, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
       <LeastSquares
         date={dateArray}
         name='Запоминание слов - тренд'
