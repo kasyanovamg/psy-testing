@@ -18,8 +18,8 @@ export const MannUitney = ({date, ctrlResults, expResults}) => {
       }
     })
   );
-  console.log(ctrlObj, expObj)
-  console.log([ctrlObj[1], expObj[1]])
+ // console.log(ctrlObj, expObj)
+ // console.log([ctrlObj[1], expObj[1]])
   if (ctrlObj[1] && expObj[1]) {
     const samples = [expObj[1], ctrlObj[1]];
     const u = mwu.test(samples);
@@ -31,4 +31,4 @@ export const MannUitney = ({date, ctrlResults, expResults}) => {
   }
 
   return <div>HI</div>
-}
+};

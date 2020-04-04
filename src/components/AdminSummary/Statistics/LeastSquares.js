@@ -37,7 +37,7 @@ export const LeastSquares = ({date, results, name}) => {
       data: newObj[obj]
     }});
 
-  const trendDataSet = {
+  const trendDataSet = [{
       label: 'trend',
       fill: false,
       lineTension: 0.1,
@@ -57,11 +57,11 @@ export const LeastSquares = ({date, results, name}) => {
       pointRadius: 1,
       pointHitRadius: 10,
       data: trend
-  }
+  }];
 
   const data = {
     labels: date,
-    datasets: dataset.concat(trendDataSet),
+    datasets: trendDataSet.concat(dataset),
   };
 
   return (

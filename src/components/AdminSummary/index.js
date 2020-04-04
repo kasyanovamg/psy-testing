@@ -6,13 +6,10 @@ import {firestoreConnect} from 'react-redux-firebase';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import orderBy from 'lodash-es/orderBy';
-import {AdminCharts} from "../AdminCharts";
-import {Friedman} from "./Statistics/Friedman";
-import {LeastSquares} from "./Statistics/LeastSquares";
-import {MannUitney} from "./Statistics/MannUitney";
 import {Redirect} from "react-router-dom";
 import {setTrackGroup} from "../../actions/otherActions";
 import {getAverage} from "./utils";
+import {AdminResultBlock} from "./AdminResultBlock"
 
 const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
@@ -85,95 +82,125 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
         <option key={i} value={author} selected={author === selectedAuth}>{author}</option>
       )}</select>
 
-      <AdminCharts date={dateArray}
-                   results={filteredProjects.map(project => project.generalResult ?
-                     {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}
-                   name='Таблицы Шульте'
-      />
-      Снижение показателя говорит об увеличении концентрации внимания
-      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
-      <LeastSquares
-        date={dateArray}
-        name='Таблицы Шульте - тренд'
-        results={filteredProjects.map(project => project.generalResult ?
-          {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
-      <MannUitney date={dateArray}
-                  ctrlResults={ctrlGrp.map(project => project.generalResult ?
-                    {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}
-                  expResults={expGrp.map(project => project.generalResult ?
-                    {result: project.generalResult.shulte, attempt: project.attempt, id: project.authorId} || 0 : 0)}
+      <AdminResultBlock dateArray={dateArray} checked={checked}
+                        results={filteredProjects.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulte,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulte,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        expResults={expGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulte,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        name={'Таблицы Шульте'}
+                        trendName={'Таблицы Шульте - тренд'}
+                        note={'Снижение показателя говорит об увеличении концентрации внимания'}
       />
 
-      <AdminCharts date={dateArray}
-                   results={filteredProjects.map(project => project.generalResult ? {
-                     result: project.generalResult.shulteRed,
-                     attempt: project.attempt,
-                     id: project.authorId
-                   } || 0 : 0)}
-                   name='Черно-Красные Таблицы Шульте'
+      <AdminResultBlock dateArray={dateArray} checked={checked}
+                        results={filteredProjects.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulteRed,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulteRed,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        expResults={expGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.shulteRed,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        name={'Черно-Красные Таблицы Шульте'}
+                        trendName={'Черно-Красные Таблицы Шульте - тренд'}
+                        note={'Снижение показателя говорит об улучшении переключаемости внимания'}
       />
-      Снижение показателя говорит об улучшении переключаемости внимания
-      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.shulteRed, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
-      <LeastSquares
-        date={dateArray}
-        name='Черно-Красные Таблицы Шульте - тренд'
-        results={filteredProjects.map(project => project.generalResult ?
-          {result: project.generalResult.shulteRed, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
 
-      <AdminCharts date={dateArray}
-                   results={filteredProjects.map(project => project.generalResult ? {
-                     result: project.generalResult.perception,
-                     attempt: project.attempt,
-                     id: project.authorId
-                   } || 0 : 0)}
-                   name='Корректурные пробы'
+      <AdminResultBlock dateArray={dateArray} checked={checked}
+                        results={filteredProjects.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.perception,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.perception,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        expResults={expGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.perception,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        name={'Корректурные пробы'}
+                        trendName={'Корректурные пробы - тренд'}
+                        note={'Снижение показателя говорит об улучшении устойчивости внимания'}
       />
-      Снижение показателя говорит об улучшении устойчивости внимания
-      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.perception, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
 
-      <LeastSquares
-        date={dateArray}
-        name='Корректурные пробы - тренд'
-        results={filteredProjects.map(project => project.generalResult ?
-          {result: project.generalResult.perception, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
-
-      <AdminCharts date={dateArray}
-                   results={filteredProjects.map(project => project.generalResult ? {
-                     result: project.generalResult.count,
-                     attempt: project.attempt,
-                     id: project.authorId
-                   } || 0 : 0)}
-                   name='Счет'
+      <AdminResultBlock dateArray={dateArray} checked={checked}
+                        results={filteredProjects.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.count,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.count,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        expResults={expGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.count,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        name={'Счет'}
+                        trendName={'Счет - тренд'}
+                        note={'Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости'}
       />
-      Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости
-      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.count, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
 
-      <LeastSquares
-        date={dateArray}
-        name='Счет - тренд'
-        results={filteredProjects.map(project => project.generalResult ?
-          {result: project.generalResult.count, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
-
-      <AdminCharts date={dateArray}
-                   results={filteredProjects.map(project => project.generalResult ? {
-                     result: project.generalResult.memoryWords,
-                     attempt: project.attempt,
-                     id: project.authorId
-                   } || 0 : 0)}
-                   name='Запоминание слов'
+      <AdminResultBlock dateArray={dateArray} checked={checked}
+                        results={filteredProjects.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.memoryWords,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        ctrlResults={ctrlGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.memoryWords,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        expResults={expGrp.map(project => project.generalResult ?
+                          {
+                            result: project.generalResult.memoryWords,
+                            attempt: project.attempt,
+                            id: project.authorId
+                          } || 0 : 0)}
+                        name={'Запоминание слов'}
+                        trendName={'Запоминание слов - тренд'}
+                        note={'Увеличение показателя говорит об улучшении памяти'}
       />
-      Увеличение показателя говорит об улучшении памяти
-      {!checked && <Friedman results={filteredProjects.map(project => project.generalResult ?
-        {result: project.generalResult.memoryWords, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>}
-      <LeastSquares
-        date={dateArray}
-        name='Запоминание слов - тренд'
-        results={filteredProjects.map(project => project.generalResult ?
-          {result: project.generalResult.memoryWords, attempt: project.attempt, id: project.authorId} || 0 : 0)}/>
     </div>
   )
 };
@@ -181,7 +208,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setGroup: (group) => dispatch(setTrackGroup(group)),
   }
-}
+};
 export const SummaryAdmin = compose(
   connect((state) => ({
       projects: getProjects(state),

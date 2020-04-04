@@ -619,7 +619,6 @@ const fill_descriptive_stats = (arrs) => {
 };
 
 export const Friedman = ({results}) => {
-  //console.log(results);
   const [descriptiveStats, fillDescriptiveStats] = useState([]);
   const [result, setRes] = useState([]);
   const [ptest, setPtest] = useState([]);
