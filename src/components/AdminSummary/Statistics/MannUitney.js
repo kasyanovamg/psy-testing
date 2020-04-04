@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import mwu from 'mann-whitney-utest'
 
 
@@ -20,15 +20,16 @@ export const MannUitney = ({date, ctrlResults, expResults}) => {
   );
  // console.log(ctrlObj, expObj)
  // console.log([ctrlObj[1], expObj[1]])
+  let message = '';
   if (ctrlObj[1] && expObj[1]) {
     const samples = [expObj[1], ctrlObj[1]];
     const u = mwu.test(samples);
     if (mwu.significant(u, samples)) {
-      console.log('The data is significant!');
+      message = 'The data is significant!';
     } else {
-      console.log('The data is not significant.');
+      message = 'The data is not significant.';
     }
   }
 
-  return <div>HI</div>
+  return <div>MannUitney: {message}</div>
 };
