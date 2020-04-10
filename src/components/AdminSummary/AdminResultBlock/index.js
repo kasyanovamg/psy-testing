@@ -11,14 +11,17 @@ export const AdminResultBlock = ({dateArray, results, checked, ctrlResults, expR
                  name={name}
     />
     {note}
-    {!checked && <Friedman results={results}/>}
-    <LeastSquares
-      date={dateArray}
-      name={trendName}
-      results={results}/>
-    <MannUitney date={dateArray}
-                ctrlResults={ctrlResults}
-                expResults={expResults}
-    />
+    {!checked &&
+    <> <Friedman results={results}/>
+      <LeastSquares
+        date={dateArray}
+        name={trendName}
+        results={results}/>
+      <MannUitney date={dateArray}
+                  ctrlResults={ctrlResults}
+                  expResults={expResults}
+      />
+    </>
+    }
   </>)
 };

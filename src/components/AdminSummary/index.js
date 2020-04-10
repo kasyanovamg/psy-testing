@@ -15,14 +15,14 @@ const getAllProjects = (state) => get(state, 'firestore.ordered.projects', []);
 const getProjects = createSelector(
   getAllProjects,
   (projects) => {
-    const allProjects = projects.filter(p => p.group !== 'test');
+    const allProjects = projects.filter(p => p.group !== 'test' && p.group !== 'control');
     return orderBy(allProjects, ['attempt'], ['asc'])
   }
 );
 const getGroups = createSelector(
   getAllProjects,
   (projects) => {
-    const allProjects = projects.filter(p => p.group !== 'test');
+    const allProjects = projects.filter(p => p.group !== 'test' && p.group !== 'control');
     const group = new Set(allProjects.map(p => p.group));
     return [...group].concat('all')
   }
@@ -51,7 +51,7 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
     setAuth('all');
   }, [selectedGroup, selectedAuth]);
 
-  const ctrlGrp = projects.filter(project => project.group === 'control');
+  const ctrlGrp = projects.filter(project => project.group === 'ctrl');
   const expGrp = projects.filter(project => project.group === 'experimental');
 
   const filteredProjects = React.useMemo(() => {
