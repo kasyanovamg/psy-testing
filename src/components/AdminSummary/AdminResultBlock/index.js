@@ -11,7 +11,7 @@ export const AdminResultBlock = ({dateArray, results, checked, ctrlResults, expR
                  name={name}
     />
     {note}
-    {!checked &&
+    {!checked && results.length > 3 &&
     <> <Friedman results={results}/>
       <LeastSquares
         date={dateArray}
