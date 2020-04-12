@@ -12,6 +12,18 @@ class CurrentSummary extends Component {
     showSummary: false,
   };
   showResults = () => {
+    // const project = {
+    //   generalResult: {
+    //     count: 0.72235,
+    //     shulte: 2.005244,
+    //     shulteRed: 10.8572342,
+    //     perception: 1.8054786,
+    //     memoryWords: 10,
+    //   },
+    //   attempt: 5,
+    //   group: "ctrl",
+    // }
+    // this.props.createProject(project);
     this.props.createProject(this.props.project);
     this.setState({showSummary: true});
   };

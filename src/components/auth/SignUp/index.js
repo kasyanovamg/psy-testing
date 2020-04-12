@@ -40,7 +40,7 @@ const Signup = props => {
     password: "",
     firstName: "",
     lastName: "",
-    group: "experimental"
+    group: "ctrl"
   });
 
   const handleChange = e => {
@@ -127,7 +127,7 @@ const Signup = props => {
           />
           <FormControlLabel
             id="isExperimentalGroup"
-            value="control"
+            value="ctrl"
             control={<Radio />}
             label="Контрольная"
           />

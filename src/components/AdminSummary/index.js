@@ -38,10 +38,13 @@ const getSelectedGroup = (state) => get(state, 'utils.group', 'all');
 const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => {
   const [selectedAuth, setAuth] = React.useState('all');
   const [checked, toggleCheck] = React.useState(false);
-  //todo: make the function to calculate average results
+  const [twoTrends, setTwoTrends] = React.useState(false);
+  const [renderResults, setRenderResult] = React.useState('Shulte');
+
   if (!auth.uid) return <Redirect to='/signin'/>;
 
   const onToggleCheck = React.useCallback(() => toggleCheck(!checked), [checked, projects]);
+  const onToggleTwoTrends = React.useCallback(() => setTwoTrends(!twoTrends), [twoTrends, projects]);
   const onChangeAuth = React.useCallback((e) => {
     setAuth(e.target.value);
     setGroup('all');
@@ -66,7 +69,7 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
   const filteredAuthors = React.useMemo(() => getFilteredAuthors(filteredProjects), [selectedAuth, selectedGroup, projects]);
   const dateArray = React.useMemo(() =>
     Array(max(filteredProjects.map(project => project.attempt || 0))).fill().map((e, i) => i + 1), [projects, selectedAuth]);
-  console.log(selectedAuth);
+
   return (
     <div className="card z-depth-0 project-summary summary-container">
       <h3>Admin</h3>
@@ -76,13 +79,23 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
       )}</select>
       <span>    Показывать средние результаты <input type="checkbox" checked={checked}
                                                      onChange={onToggleCheck}/> </span>
+      <span>    Сравинить тренды <input type="checkbox" checked={twoTrends}
+                                        onChange={onToggleTwoTrends}/> </span>
       <p>Выбрать пользователя: </p>
       {/*check that users with same last name have their data under one account*/}
       <select onChange={onChangeAuth} value={selectedAuth}>{filteredAuthors.map((author, i) =>
         <option key={i} value={author} selected={author === selectedAuth}>{author}</option>
       )}</select>
+      <div>
+        <button onClick={() => setRenderResult('Shulte')}>Shulte</button>
+        <button onClick={() => setRenderResult('ShulteRed')}>ShulteRed</button>
+        <button onClick={() => setRenderResult('Perception')}>Perception</button>
+        <button onClick={() => setRenderResult('Count')}>Count</button>
+        <button onClick={() => setRenderResult('MemoryWords')}>MemoryWords</button>
+      </div>
 
-      <AdminResultBlock dateArray={dateArray} checked={checked}
+      {renderResults === 'Shulte' &&
+      <AdminResultBlock dateArray={dateArray} checked={checked} twoTrends={twoTrends}
                         results={filteredProjects.map(project => project.generalResult ?
                           {
                             result: project.generalResult.shulte,
@@ -104,9 +117,10 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                         name={'Таблицы Шульте'}
                         trendName={'Таблицы Шульте - тренд'}
                         note={'Снижение показателя говорит об увеличении концентрации внимания'}
-      />
+      />}
 
-      <AdminResultBlock dateArray={dateArray} checked={checked}
+      {renderResults === 'ShulteRed' &&
+      <AdminResultBlock dateArray={dateArray} checked={checked} twoTrends={twoTrends}
                         results={filteredProjects.map(project => project.generalResult ?
                           {
                             result: project.generalResult.shulteRed,
@@ -128,9 +142,9 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                         name={'Черно-Красные Таблицы Шульте'}
                         trendName={'Черно-Красные Таблицы Шульте - тренд'}
                         note={'Снижение показателя говорит об улучшении переключаемости внимания'}
-      />
-
-      <AdminResultBlock dateArray={dateArray} checked={checked}
+      />}
+      {renderResults === 'Perception' &&
+      <AdminResultBlock dateArray={dateArray} checked={checked} twoTrends={twoTrends}
                         results={filteredProjects.map(project => project.generalResult ?
                           {
                             result: project.generalResult.perception,
@@ -152,9 +166,10 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                         name={'Корректурные пробы'}
                         trendName={'Корректурные пробы - тренд'}
                         note={'Снижение показателя говорит об улучшении устойчивости внимания'}
-      />
+      />}
 
-      <AdminResultBlock dateArray={dateArray} checked={checked}
+      {renderResults === 'Count' &&
+      <AdminResultBlock dateArray={dateArray} checked={checked} twoTrends={twoTrends}
                         results={filteredProjects.map(project => project.generalResult ?
                           {
                             result: project.generalResult.count,
@@ -176,9 +191,10 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                         name={'Счет'}
                         trendName={'Счет - тренд'}
                         note={'Результат близкий к единице говорит о хорошей устойчивости внимания и низкой истощаемости'}
-      />
+      />}
 
-      <AdminResultBlock dateArray={dateArray} checked={checked}
+      {renderResults === 'MemoryWords' &&
+      <AdminResultBlock dateArray={dateArray} checked={checked} twoTrends={twoTrends}
                         results={filteredProjects.map(project => project.generalResult ?
                           {
                             result: project.generalResult.memoryWords,
@@ -200,7 +216,7 @@ const SummaryAdminView = ({projects, auth, groups, setGroup, selectedGroup}) => 
                         name={'Запоминание слов'}
                         trendName={'Запоминание слов - тренд'}
                         note={'Увеличение показателя говорит об улучшении памяти'}
-      />
+      />}
     </div>
   )
 };
