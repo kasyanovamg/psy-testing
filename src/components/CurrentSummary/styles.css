@@ -1,0 +1,9 @@
+.summary-container{
+    margin: 0 auto;
+    width: 1080px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.summary-button {
+    text-align: center;
+}

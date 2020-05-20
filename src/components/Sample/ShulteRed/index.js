@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitShulteRed} from '../../../actions/generalHelpers'
+import {submitResult, submitShulteRed} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import Information from '../Shulte/Information'
 import Timer from '../Timer'
@@ -25,7 +25,6 @@ class ShulteRed extends Component {
   userRed = [`${this.redLength + 1}r`];
   userBlack = ['0b'];
   cellVerify = (cell) => {
-    console.log(cell, this.userRed, this.userBlack);
     this.setState({error: false});
     if (this.state.countBackwards) {
       if (parseInt(this.userRed.slice(-1)[0]) - 1 + "r" === cell) {
@@ -55,9 +54,21 @@ class ShulteRed extends Component {
     }
   };
 
+  getFinalScore = () => {
+    return this.props.time * 0.1 + this.state.errorCounter;
+  };
+
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'shulteRed'});
     this.props.history.push('/test/perception');
+  };
+
+  abortTest = () => {
+    const currentErrors = this.state.errorCounter + (this.redLength + this.blackLength - this.userRed.length - this.userBlack.length);
+    this.setState({errorCounter: currentErrors});
+    this.setState({endTraining: true});
   };
 
   render() {
@@ -66,9 +77,12 @@ class ShulteRed extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p>
+          Кликайте на красные и черные цифры цифры по-переменно: черные - в порядке возрастания, красные в порядке убывания.
+        </p>
         {!this.state.startTraining &&
         <div className='message'>
-          <span className='start-message'>{'Начните поиск цифр'}</span>
+          <span className='start-message'>{'Начните поиск цифр: 1 черный - 24 красный; 2 черный - 23 красный... '}</span>
           <button className='start-btn' onClick={() =>
             this.setState({startTraining: true})}>
             Начать
@@ -82,7 +96,7 @@ class ShulteRed extends Component {
             end={this.state.endTraining}
             errors={this.state.errorCounter}
             errorMessage={'Неверное число!'}
-            instructionNote={'Найдите числа!'}
+            instructionNote={'Найдите числа: 1 черный - 24 красный; 2 черный - 23 красный...'}
           />
 
           <div className='table-wide'>
@@ -92,7 +106,8 @@ class ShulteRed extends Component {
                      key={e} onClick={() => this.cellVerify(e)}>{parseInt(e)}</div>)
             }
           </div>
-          {!this.state.endTraining && <Timer/>}
+          {!this.state.endTraining && <> <Timer/> <Button text='Завершить тестирование' onClick={this.abortTest} />
+            <div>Все не найденные числа защитаются как ошибки!</div> </>}
         </React.Fragment>
         }
         {this.state.endTraining &&
@@ -114,7 +129,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitShulteRed(result))
+    submitResult: (result) => dispatch(submitShulteRed(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

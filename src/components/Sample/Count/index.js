@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import flattenDeep from 'lodash-es/flattenDeep';
 import {createProject} from '../../../actions/projectActions';
-import {submitCount} from '../../../actions/generalHelpers';
+import {submitCount, submitResult} from '../../../actions/generalHelpers';
 import {Redirect} from 'react-router-dom';
 import Information from '../Shulte/Information';
 import {Rows} from './Rows';
 import {Button} from "../../Button";
 import './styles.css';
 
-export const lineLength = 23; //23;
-const numberOfRows = 10; //10
+export const lineLength = 20; //23;
+const numberOfRows = 8; //10 - always even number
 
 class Count extends Component {
   state = {
@@ -19,12 +20,14 @@ class Count extends Component {
     endTraining: false,
     result: {},
     currentRow: 0,
-    answer: [],
+    answer: {},
+    arrayAnswer: [],
+    finalScore: 0,
   };
 
   setAnswer = (ans) => {
-    console.log(ans);
-    this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}))
+    this.setState(({answer: {...this.state.answer, [this.state.currentRow]: ans}}));
+    this.setState(({arrayAnswer: [...this.state.arrayAnswer, ans]}))
   };
 
   rowLength = Array(numberOfRows).fill('');
@@ -37,8 +40,20 @@ class Count extends Component {
     this.setState({endTraining: true});
   };
 
+
   setNext = () => {
+    const firstArray = flattenDeep(this.state.arrayAnswer.slice(0, numberOfRows/2));
+    const secondArray = flattenDeep(this.state.arrayAnswer.slice(numberOfRows/2, numberOfRows));
+    console.log(firstArray, secondArray);
+    const firstResult = firstArray.reduce((a, b = {}) => { console.log(a, b);   return a + b.res}, 0);
+    const secondResult = secondArray.reduce((a, b = {}) => a + b.res, 0);
+    // Если значение коэффициента работоспособности приближается к 1,
+    // то это означает, что утомления практически не происходит.
+    // Если коэффициент больше 1, то это свидетельствует о медленной врабатываемости испытуемого.
+    // Коэффициент работоспособности, стремящийся к нулю, связан с истощаемостью внимания и снижением работоспособности.
+    const finalResult = firstResult > 0 ? secondResult/firstResult : 0;
     this.props.submitResult(this.state.answer);
+    this.props.submitFinal ({finalScore: finalResult, name: 'count'});
     this.props.history.push('/test/memory-words');
   };
 
@@ -48,9 +63,12 @@ class Count extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p className='container'>Вам будет дано {numberOfRows} радов чилел. Нужно складывать или вычитать числа и записывать в поле ввода
+          (для отрицательных чисел не обязательно ставить знак минуса). На подсчет каждого ряда дается 30 секунд.
+          По истечении этого времени ряд будет блокироваться.</p>
         {!this.state.startTraining &&
         <div className='message'>
-          <span className='start-message'>{'Складывайте или вычитайте числа'}</span>
+          <span className='start-message'>{'Складывайте или вычитайте числа. Запишите модуль числа.'}</span>
           <Button text='Начать' onClick={() =>
             this.setState({startTraining: true})}/>
         </div>
@@ -62,7 +80,7 @@ class Count extends Component {
             end={this.state.endTraining}
             errors={this.state.errorCounter}
             errorMessage={'Неверное число!'}
-            instructionNote={'Найдите числа!'}
+            instructionNote={'Складывайте или вычитайче числа. Запишите модуль числа.'}
           />
 
           {
@@ -99,7 +117,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitCount(result))
+    submitResult: (result) => dispatch(submitCount(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

@@ -1,10 +1,14 @@
-import {combineReducers} from "redux";
+import {persistCombineReducers} from 'redux-persist';
+import storageSession from 'redux-persist/lib/storage/session';
 import {
-  SUBMIT_COUNT, SUBMIT_MEMORY_IMAGES,
+  SUBMIT_COUNT,
   SUBMIT_MEMORY_WORDS,
   SUBMIT_PERCEPTION,
   SUBMIT_SHULTE,
-  SUBMIT_SHULTE_RED
+  SUBMIT_SHULTE_RED,
+  SUBMIT_RESULT,
+  SET_GROUP,
+  SET_ATTEMPT,
 } from '../actions/generalHelpers';
 
 export const perceptionResult = (state = {}, action) => {
@@ -70,24 +74,51 @@ export const memoryWordsResult = (state = {}, action) => {
   }
 };
 
-export const memoryImagesResult = (state = {}, action) => {
+export const generalResult = (state = {}, action) => {
   switch (action.type) {
-    case SUBMIT_MEMORY_IMAGES:
+    case SUBMIT_RESULT:
       return {
         ...state,
-        time: action.payload.result.time,
-        errors: action.payload.result.errors
+        [action.payload.result.name]: action.payload.result.finalScore,
       };
     default:
       return state;
   }
 };
 
-export default combineReducers({
-  perceptionResult,
-  shulteResult,
-  shulteRedResult,
-  countResult,
-  memoryWordsResult,
-  memoryImagesResult,
-})
+
+export const group = (state = '', action) => {
+  switch (action.type) {
+    case SET_GROUP:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
+export const attempt = (state = 0, action) => {
+  switch (action.type) {
+    case SET_ATTEMPT:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
+export default persistCombineReducers(
+  {
+    key: 'psyTesting',
+    storage: storageSession,
+  },
+  {
+    perceptionResult,
+    shulteResult,
+    shulteRedResult,
+    countResult,
+    memoryWordsResult,
+    group,
+    attempt,
+    generalResult,
+  })

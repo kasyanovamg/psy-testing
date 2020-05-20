@@ -1,4 +1,5 @@
 .button-main {
+    align-self: center;
     background: #d93434;
     background-image: -webkit-linear-gradient(top, #d93434, #b82b2b);
     background-image: -moz-linear-gradient(top, #d93434, #b82b2b);
@@ -26,6 +27,9 @@
 }
 
 .button-next {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    align-self: center;
     background: #32a4e9;
     background-image: -webkit-linear-gradient(top, #32a4e9, #1e59b8);
     background-image: -moz-linear-gradient(top, #32a4e9, #1e59b8);

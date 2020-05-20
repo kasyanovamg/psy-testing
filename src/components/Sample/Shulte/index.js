@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitShulte} from '../../../actions/generalHelpers'
+import {submitShulte, submitResult} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import Information from './Information'
 import Timer from '../Timer'
@@ -35,9 +35,21 @@ class Shulte extends Component {
     }
   };
 
+  getFinalScore = () => {
+    return this.props.time * 0.1 + this.state.errorCounter;
+  };
+
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'shulte'});
     this.props.history.push('/test/shulte-red');
+  };
+
+  abortTest = () => {
+    const currentErrors = this.state.errorCounter + (this.tableLength - this.userNumbers.length);
+    this.setState({errorCounter: currentErrors});
+    this.setState({endTraining: true});
   };
 
   render() {
@@ -46,6 +58,9 @@ class Shulte extends Component {
     return (
       <div className='contents'>
         <p>Тренировка различных аспектов внимания</p>
+        <p>
+          Кликайте на цифры по очереди от 1 до 25-ти. Задание выполняется на время.
+        </p>
         {!this.state.startTraining &&
         <div className='message'>
           <span className='start-message'>{'Начните поиск цифр от 1 до 25'}</span>
@@ -71,20 +86,11 @@ class Shulte extends Component {
                 <div key={e} onClick={() => this.cellVerify(e)} className='cell'>{e}</div>)
             }
           </div>
-          {!this.state.endTraining && <Timer/>}
+          {!this.state.endTraining && <> <Timer/> <Button text='Завершить тестирование' onClick={this.abortTest} />
+          <div>Все не найденные числа защитаются как ошибки!</div> </>}
         </React.Fragment>
         }
-        {this.state.endTraining &&
-         // <button className='next' onClick={() =>
-        //  this.props.submitResult({time: this.props.time, errors: this.state.errorCounter})}>Submit
-        //  </button>
-         // <button className='next' onClick={() =>
-        //  this.props.createProject(this.props.project)
-      // }>Submit Final
-      //    </button>
-
-        <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>
-        }
+        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
       </div>
     )
   }
@@ -101,7 +107,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitShulte(result))
+    submitResult: (result) => dispatch(submitShulte(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

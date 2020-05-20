@@ -4,7 +4,7 @@ import Home from './components/Home';
 import Signin from './components/auth/SignIn';
 import Signup from './components/auth/SignUp';
 import Test from './components/Test';
-import Summary from './components/Summary';
+import {Summary} from './components/Summary';
 import Train from './components/Train';
 import Sample from './components/Sample';
 import Shulte from './components/Sample/Shulte';
@@ -22,7 +22,7 @@ class App extends Component {
       <>
         <Navbar />
         <Switch>
-          <Route exact path='/psy-testing' component={Home} />
+          <Route exact path='/' component={Home} />
           <Route exact path='/signin' component={Signin} />
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/test' component={Test} />
@@ -36,7 +36,7 @@ class App extends Component {
           <Route exact path='/test/count' component={Count} />
           <Route exact path='/test/memory-words' component={MemoryWords} />
           <Route exact path='/test/current-summary' component={CurrentSummary} />
-          <Redirect to='/psy-testing' />
+          <Redirect to='/' />
         </Switch>
       </>
     );

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Timer from '../Timer';
 import Information from '../Shulte/Information';
 import {createProject} from "../../../actions/projectActions";
-import {submitPerseption} from "../../../actions/generalHelpers";
+import {submitPerseption, submitResult} from "../../../actions/generalHelpers";
 import {connect} from "react-redux";
 import './styles.css';
 import {Button} from "../../Button";
@@ -35,9 +35,19 @@ class Perception extends Component {
     }
 
   };
+  abortTest = () => {
+    this.setState({errorCounter: this.state.errorCounter + (this.newLetters.length - this.guessedCells.length)});
+    this.setState({endTraining: true});
+  };
+
+  getFinalScore = () => {
+    return this.props.time * 0.1 + this.state.errorCounter;
+  };
 
   setNext = () => {
+    const finalScore = this.getFinalScore();
     this.props.submitResult({time: this.props.time, errors: this.state.errorCounter});
+    this.props.submitFinal ({finalScore, name: 'perception'});
     this.props.history.push('/test/count');
   };
 
@@ -45,9 +55,11 @@ class Perception extends Component {
     const {auth} = this.props;
     if (!auth.uid) return <Redirect to='/signin'/>;
     return (
-      <>
         <div className='contents'>
           <p>Корректурная проба</p>
+          <p>
+            Среди множества букв "{this.letter}" найдите все буквы "{this.searchedLetter}".
+          </p>
           {!this.state.startTraining &&
           <div className='message'>
             <span className='start-message'>{`Найдите все буквы "${this.searchedLetter}"`}</span>
@@ -71,12 +83,12 @@ class Perception extends Component {
                   </div>)
               }
             </div>
-            {!this.state.endTraining && <Timer getTime={this.props.time}/>}
+            {!this.state.endTraining && <> <Timer getTime={this.props.time}/> <Button text='Завершить тестирование' onClick={this.abortTest} /> </>}
+
           </React.Fragment>
           }
+          {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
         </div>
-        {this.state.endTraining && <Button nameOfClass='next' onClick={this.setNext} text='Далее'/>}
-      </>
     );
   }
 }
@@ -92,7 +104,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitPerseption(result))
+    submitResult: (result) => dispatch(submitPerseption(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 

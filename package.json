@@ -6,9 +6,16 @@
   "dependencies": {
     "@material-ui/core": "^4.4.3",
     "@material-ui/icons": "^4.4.3",
-    "firebase": "^5.8.5",
+    "chart.js": "^2.8.0",
+    "firebase": "^7.6.1",
+    "grpc": "^1.24.2",
+    "least-squares": "0.0.2",
+    "lodash-es": "^4.17.15",
+    "mann-whitney-utest": "^1.0.5",
+    "normalizr": "~3.3.0",
     "react": "^16.9.0",
-    "react-dom": "^16.5.2",
+    "react-chartjs-2": "^2.8.0",
+    "react-dom": "^16.9.0",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",
     "react-router-dom": "^4.3.1",
@@ -16,7 +23,9 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-firestore": "^0.6.3",
-    "redux-thunk": "^2.3.0"
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

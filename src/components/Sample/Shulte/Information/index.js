@@ -23,11 +23,6 @@ const mapStateToProps = (state) => {
   return {
     time: state.current.setTime
   }
-}
+};
 
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Information)
+export default connect(mapStateToProps)(Information)

@@ -1,13 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../../../actions/projectActions'
-import {submitMemoryWords} from '../../../actions/generalHelpers'
+import {submitMemoryWords, submitResult} from '../../../actions/generalHelpers'
 import {Redirect} from 'react-router-dom'
 import './styles.css';
 import TimerReverse from "../TimerReverse";
 import {Button} from "../../Button";
 
-const words = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь'].sort(() => Math.random() - 0.5);
+const maxTime = 30;
+//(new Set(array)).size !== array.length;  to check for duplicates
+const wordsRaw = ['Лес', 'Хлеб', 'Окно', 'Стул', 'Вода', 'Конь', 'Гриб', 'Игла', 'Мед', 'Огонь',
+  'Число', 'Хор', 'Камень', 'Кино', 'Зонт', 'Море', 'Шмель', 'Лампа', 'Рысь',
+  'Кот', 'Ель', 'Дом', 'Зима', 'Мост', 'Брат', 'Очки'];
+
+const words = wordsRaw.sort(() => Math.random() - 0.5).slice(0, 10);
 
 class MemoryWords extends Component {
   state = {
@@ -34,6 +40,7 @@ class MemoryWords extends Component {
 
   setNext = () => {
     this.props.submitResult(this.state.correct);
+    this.props.submitFinal({finalScore: this.state.correct, name: 'memoryWords'});
     this.props.history.push('/test/current-summary');
   };
 
@@ -44,18 +51,21 @@ class MemoryWords extends Component {
       <div className='contents'>
         <p>Тренировка памяти</p>
         {!this.state.startTraining &&
-        <div className='message'>
-          <span className='start-message'>{'Запомните следующие слова'}</span>
-          <button className='start-btn' onClick={() =>
-            this.setState({startTraining: true})}>
-            Начать
-          </button>
-        </div>
+        <>
+          <div className='message'>
+            <span className='start-message'>{'Запомните следующие слова'}</span>
+            <button className='start-btn' onClick={() =>
+              this.setState({startTraining: true})}>
+              Начать
+            </button>
+          </div>
+          <p>На запоминание всех слов будет дано {maxTime} секунд.</p>
+        </>
         }
         {this.state.startTraining &&
         <React.Fragment>
 
-          {this.state.showWords && <TimerReverse maxTime={30} passedFunction={this.endMemorizing}/>}
+          {this.state.showWords && <TimerReverse maxTime={maxTime} passedFunction={this.endMemorizing}/>}
 
           {this.state.showWords && <div className='words'>{words.join(', ')}</div>}
           {!this.state.showWords && <div>
@@ -63,7 +73,7 @@ class MemoryWords extends Component {
                                                                                   onChange={this.handleChange}
                                                                                   autoComplete="off"
                                                                                   id={i}/></div>)}
-            <Button onClick={this.checkWords} text='Проверить' nameOfClass='next' />
+            <Button onClick={this.checkWords} text='Проверить' nameOfClass='next'/>
           </div>}
 
         </React.Fragment>
@@ -91,7 +101,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (project) => dispatch(createProject(project)),
-    submitResult: (result) => dispatch(submitMemoryWords(result))
+    submitResult: (result) => dispatch(submitMemoryWords(result)),
+    submitFinal: (result) => dispatch(submitResult(result)),
   }
 };
 
