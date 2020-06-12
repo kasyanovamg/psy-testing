@@ -68,6 +68,27 @@ export const LeastSquares = ({date, results, name}) => {
     <div>
       <h2>{name}</h2>
       <Line data={data} />
+
+      <div style={{
+        height: '50px',
+        width: '140px',
+        position: 'relative',
+        margin: '0 auto',
+      }}>
+        <span style={{
+        backgroundColor: '#ce1b4a',
+        width: '50px',
+        height: '4px',
+        position: 'absolute',
+        top: '7px',
+        content: "",
+      }} />
+      <span style={{
+        position: 'absolute',
+        left: '60px'
+      }}>Тренд</span>
+      </div>
+
     </div>
   );
 };
@@ -194,6 +215,43 @@ export const Trends = ({date, ctrlResults, expResults}) => {
     <div>
       <h2>Сравнение трендов контрольной и экспериментальной групп</h2>
       <Line data={data} />
+
+      <div style={{
+        height: '50px',
+        width: '640px',
+        position: 'relative',
+        margin: '0 auto',
+      }}>
+        <span style={{
+          backgroundColor: '#ce1b4a',
+          width: '50px',
+          height: '4px',
+          position: 'absolute',
+          top: '7px',
+          content: "",
+        }} />
+        <span style={{
+          position: 'absolute',
+          left: '60px'
+        }}>Тренд контрольной группы</span>
+
+
+        <span style={{
+          backgroundColor: '#2a4ccf',
+          width: '50px',
+          height: '4px',
+          position: 'absolute',
+          left: '340px',
+          top: '7px',
+          content: "",
+        }} />
+        <span style={{
+          position: 'absolute',
+          left: '400px'
+        }}>Тренд экспериментальнойгруппы</span>
+      </div>
+
+
     </div>
   );
 };

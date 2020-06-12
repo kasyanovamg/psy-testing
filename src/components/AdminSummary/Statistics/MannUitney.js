@@ -24,21 +24,36 @@ export const MannUitney = ({date, ctrlResults, expResults}) => {
       const samples = [expObj[i], ctrlObj[i]];
       const u = mwu.test(samples);
       if (mwu.significant(u, samples)) {
-        return 'The data is significant!';
+        return 'Существенные различия';
       } else {
-        return 'The data is not significant.';
+        return 'Различия не существены';
       }
     }
   }
 
 
   return <div>
-    <ul>
+    <table>
+      <thead>
+      <tr>
+        <th>№ тренировки</th>
+        <th>Значимость различий</th>
+
+      </tr>
+      </thead>
+      <tbody>
       {date && date.map(date =>
-      <li key={date}>
-        {compare(date)}
-      </li>
+      <tr key={date}>
+        <th>
+          {date}
+        </th>
+        <td>
+          {compare(date)}
+        </td>
+
+      </tr>
       )}
-    </ul>
+      </tbody>
+    </table>
   </div>
 };
