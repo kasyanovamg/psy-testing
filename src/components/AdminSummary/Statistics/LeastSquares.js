@@ -1,13 +1,32 @@
 import React from 'react';
-import lsq from "least-squares";
 import {Line} from "react-chartjs-2";
+
+//exponential regression
+const squares = (X, Y, ret) => {
+  let sumX = 0;
+  let sumY = 0;
+  let sumXY = 0;
+  let sumXSq = 0;
+  let N = X.length;
+
+  for(let i = 0; i < N; ++i) {
+    sumX += X[i];
+    sumY += Math.log(Y[i]);
+    sumXY += X[i] * Math.log(Y[i]);
+    sumXSq += X[i] * X[i];
+  }
+
+  ret.b = (N * sumXY - sumX * sumY) / (N * sumXSq - sumX * sumX);
+  ret.a = ((1/N) * sumY) - ((ret.b /N) * sumX);
+};
 
 export const LeastSquares = ({date, results, name}) => {
   const X = results.map(res => res.attempt);
   const Y = results.map(res => res.result || 0);
   const ret = {};
-  lsq(X, Y, ret);
-  const trend = date.map((d) => ret.m * d + ret.b);
+  squares(X, Y, ret);
+
+  const trend = date.map((d) => Math.exp(ret.a + ret.b * d));
 
   const newObj = {};
   results.forEach(r => {
@@ -93,13 +112,14 @@ export const LeastSquares = ({date, results, name}) => {
   );
 };
 
+
 export const Trends = ({date, ctrlResults, expResults}) => {
   const XctrlResults = ctrlResults.map(res => res.attempt);
   const YctrlResults = ctrlResults.map(res => res.result || 0);
   const retctrlResults = {};
-  lsq(XctrlResults, YctrlResults, retctrlResults);
-  const trendctrlResults = date.map((d) => retctrlResults.m * d + retctrlResults.b);
 
+  squares(XctrlResults, YctrlResults, retctrlResults);
+  const trendctrlResults = date.map((d) => Math.exp(retctrlResults.a + d * retctrlResults.b));
   const newObjctrlResults = {};
   ctrlResults.forEach(r => {
     return newObjctrlResults[r.id] ? newObjctrlResults[r.id] = newObjctrlResults[r.id].concat(r.result) : newObjctrlResults[r.id] = [r.result];
@@ -108,8 +128,9 @@ export const Trends = ({date, ctrlResults, expResults}) => {
   const XexpResults = expResults.map(res => res.attempt);
   const YexpResults = expResults.map(res => res.result || 0);
   const retexpResults = {};
-  lsq(XexpResults, YexpResults, retexpResults);
-  const trendexpResults = date.map((d) => retexpResults.m * d + retexpResults.b);
+  squares(XexpResults, YexpResults, retexpResults);
+
+  const trendexpResults = date.map((d) => Math.exp(retexpResults.a + d * retexpResults.b ));
 
   const newObjexpResults = {};
   expResults.forEach(r => {
