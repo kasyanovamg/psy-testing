@@ -3,6 +3,11 @@ export const createProject = (project) => {
     const firestore = getFirestore();
     const profile = getState().firebase.profile;
     const authorId = getState().firebase.auth.uid;
+    // const profile = {
+    //   firstName: '',
+    //   lastName: '',
+    // };
+    // const authorId = '';
     firestore.collection('projects').add({
       ...project,
       authorFirstName: profile.firstName,

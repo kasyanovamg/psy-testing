@@ -8,55 +8,72 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Checkbox,
 } from "@material-ui/core";
-import {NavLink, Redirect} from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../../actions/authActions";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: 600,
     padding: 15,
     margin: "200px auto",
-    boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
   },
   form: {
     flexDirection: "column",
-    display: "flex"
+    display: "flex",
   },
   formItem: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   radio: {
     display: "flex",
-    flexDirection: "row"
-  }
+    flexDirection: "row",
+  },
 }));
 
-const Signup = props => {
+const CheckBoxLabel = () => (
+  <p>
+    Я прочитал/а и согласен/а с{" "}
+    <NavLink to="/privacy">условиями использования </NavLink>
+    этого сервиса.
+  </p>
+);
+
+const Signup = (props) => {
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
-    group: "control"
+    group: "experimental",
+    isRulesAccepted: false,
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormValues({
       ...formValues,
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   };
-  const setGroup = e => {
+
+  const setGroup = (e) => {
     setFormValues({
       ...formValues,
-      group: e.target.value
+      group: e.target.value,
     });
-    console.log(formValues)
+    console.log(formValues);
   };
-  const handleSubmit = e => {
+
+  const handleCheckboxChange = (e) => {
+    setFormValues({ ...formValues, isRulesAccepted: e.target.checked });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     props.signUp(formValues);
   };
@@ -127,43 +144,61 @@ const Signup = props => {
           />
           <FormControlLabel
             id="isExperimentalGroup"
-            value="control"
+            value="ctrl"
             control={<Radio />}
             label="Контрольная"
           />
         </RadioGroup>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formValues.isRulesAccepted}
+              onChange={handleCheckboxChange}
+              name="isRulesAccepted"
+              color="primary"
+              required
+            />
+          }
+          label={<CheckBoxLabel />}
+        />
         <Grid>
           <Button
             type="submit"
             color="primary"
             variant="contained"
-            style={{ marginRight: 20,  backgroundColor: '#d8f0de', color: 'black' }}
+            style={{
+              marginRight: 20,
+              backgroundColor: "#d8f0de",
+              color: "black",
+            }}
           >
             Зарегистрироваться
           </Button>
           {authError && <p>{authError}</p>}
         </Grid>
       </form>
-      <br/>
-      <p>Уже есть аккаунт? <NavLink to='/signin' className={props.className}>Войти</NavLink></p>
+      <br />
+      <p>
+        Уже есть аккаунт?{" "}
+        <NavLink to="/signin" className={props.className}>
+          Войти
+        </NavLink>
+      </p>
     </Card>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
-    authError: state.auth.authError
+    authError: state.auth.authError,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    signUp: creds => dispatch(signUp(creds))
+    signUp: (creds) => dispatch(signUp(creds)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
